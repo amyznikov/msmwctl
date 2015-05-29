@@ -1,0 +1,19 @@
+;;;;; Author: A. Myznikov <andrey.myznikov@gmail.com>
+
+[Unit]
+Description=Msm2 configuration console
+After=syslog.target network.target local-fs.target
+
+[Service]
+; service
+Type=simple
+ExecStart=BINDIR/msmwctl --docroot RESDIR --approot RESDIR --http-port 9090 --http-addr 0.0.0.0
+ExecStop=/usr/bin/killall msmwctl
+
+TimeoutSec=15s
+Restart=always
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

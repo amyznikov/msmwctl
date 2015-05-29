@@ -1,0 +1,41 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:        msmwctl
+# Required-Start:  $network
+# Default-Start:   
+# Default-Stop:    
+# Short-Description: Msm2 configuration console
+### END INIT INFO
+
+bindir=BINDIR
+resdir=RESDIR
+exename=msmwctl
+
+SERVICE=${bindir}/${exename} --docroot ${resdir} --approot ${resdir} --http-port 9090 --http-addr 0.0.0.0
+ 
+case "$1" in
+  start)
+  	${SERVICE}
+  	;;
+  	
+  stop)
+  	killall ${exename}
+  	;;
+
+  restart)
+  	killall ${exename}
+  	sleep 1
+  	${SERVICE}
+  	;;
+  	
+  status )
+  	ps aux | fgrep ${exename}
+  	;;
+  	
+   *)
+    echo "Usage:"
+    echo "  service $(basename $0) {start|stop|restart|status}"
+    exit 1
+    ;;
+esac
