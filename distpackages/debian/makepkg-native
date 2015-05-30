@@ -1,0 +1,59 @@
+#! /bin/bash
+
+
+wrkdir=$(pwd)
+srcdir=${wrkdir}/../..
+arch=$(uname -m | sed -r -e 's:(i486|i586|i686):i386:' -e 's:x86_64:amd64:')
+
+
+# Package name
+name=msmwctl
+
+# Package version
+version=$(egrep '^VERSION\s*=' ${srcdir}/Makefile | egrep -o '[0-9.]+')
+
+
+# Package description
+control="\
+Package: ${name}
+Version: ${version}
+Section: special-is
+Priority: optional
+Homepage: http://special-is.com
+Architecture: ${arch}
+Depends: wt (>=3.3.4)
+Provides:  msmwctl
+Conflicts:
+Replaces:
+Maintainer: A. Myznikov <andrey.myznikov@gmail.com>
+Description: Msm2 configuration console.
+"
+
+pkgname="${name}_${version}_${arch}"
+dpkg=${wrkdir}/${pkgname}
+
+
+# Build package
+cd ${srcdir}
+make distclean all && make prefix=/usr DESTDIR=${dpkg} install || exit 1
+
+
+
+# Create debian control files
+mkdir -p ${dpkg}/DEBIAN && cd ${dpkg} || exit 1
+
+echo "${control}" > DEBIAN/control
+
+for f in * ; do
+  if [[ "$f" != "DEBIAN" ]] ; then
+   find $f/ -type d -exec echo {} \; >> DEBIAN/dirs
+   md5deep -l -r $f >> DEBIAN/md5sums
+  fi
+done
+
+
+
+
+# Create the package
+cd ${wrkdir} && dpkg-deb --build ${pkgname}
+
