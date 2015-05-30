@@ -1,0 +1,6 @@
+#! /bin/bash
+
+src=$(pwd)/../..
+make -C ${src} distclean && \
+  makepkg --config armv7h-makepkg.conf cross=arm-cortexa9_neon-linux-gnueabihf && \
+  make -C ${src} distclean

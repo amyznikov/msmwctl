@@ -1,0 +1,33 @@
+# Maintainer: Andrey Myznikov <andrey.myznikov@gmail.com>
+
+pkgname=msmwctl
+src=$(pwd)/../..
+pkgver="$(egrep '^VERSION\s*=' ${src}/Makefile | egrep -o '[0-9.]+')"
+echo pkgver="$pkgver"
+pkgrel=1
+pkgdesc="Msm2 configuration console"
+arch=(i386 i486 i586 i686 x86_64 armv6h armv7h)
+license=('custom')
+depends=('wt')
+options=(docs !libtool !ccache !strip )
+
+build() {
+  cd $src
+  if [[ "$cross" == "" ]] ; then
+     make prefix=/usr all
+  else
+     [[ "$sysroot" == "" ]] && sysroot=/usr/x-tools/$cross/$cross/sysroot
+     make prefix=/usr cross=$cross- sysroot=$sysroot all
+  fi
+}
+
+
+package() {
+  cd $src
+  if [[ "$cross" == "" ]] ; then
+     make DESTDIR="$pkgdir" prefix=/usr install
+  else
+     [[ "$sysroot" == "" ]] && sysroot=/usr/x-tools/$cross/$cross/sysroot
+     make DESTDIR="$pkgdir" prefix=/usr cross=$cross- sysroot=$sysroot install
+  fi
+}
