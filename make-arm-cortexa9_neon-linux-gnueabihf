@@ -1,0 +1,5 @@
+#! /bin/bash
+
+make cross=arm-cortexa9_neon-linux-gnueabihf- \
+     sysroot=/usr/x-tools/arm-cortexa9_neon-linux-gnueabihf/arm-cortexa9_neon-linux-gnueabihf/sysroot \
+     $@
