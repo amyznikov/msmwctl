@@ -24,9 +24,9 @@ GuiRoot::GuiRoot(WContainerWidget * parent)
 
   stack = new WStackedWidget(this);
   stack->addStyleClass("contents");
-  // stack->decorationStyle().setBackgroundColor(Wt::red);
-  stack->setMargin(WLength(0, WLength::Pixel));
-  stack->setOffsets(WLength(0, WLength::Pixel));
+  stack->decorationStyle().setBackgroundColor(Wt::red);
+  stack->setMargin(WLength(-20, WLength::Pixel), Wt::Top);
+  //stack->setOffsets(WLength(0, WLength::Pixel));
   stack->setPadding(WLength(0, WLength::Pixel));
 
 
@@ -40,5 +40,6 @@ GuiRoot::GuiRoot(WContainerWidget * parent)
   this->setMargin(WLength(0, WLength::Pixel));
   this->setOffsets(WLength(0, WLength::Pixel));
   this->setPadding(WLength(0, WLength::Pixel));
+
 
 }
