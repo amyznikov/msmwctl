@@ -9,10 +9,9 @@
 ### END INIT INFO
 
 bindir=BINDIR
-resdir=RESDIR
 exename=msmwctl
 
-SERVICE="${bindir}/${exename} --docroot ${resdir} --approot ${resdir} --http-port 9090 --http-addr 0.0.0.0"
+SERVICE=${bindir}/${exename}
  
 case "$1" in
   start)

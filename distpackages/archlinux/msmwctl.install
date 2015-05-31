@@ -1,0 +1,34 @@
+
+SERVICE_NAME="msmwctl.service"; 
+
+stop_service() {
+    if [ "`systemctl is-active ${SERVICE_NAME}`" == "active" ] ; then
+        echo "Force stopping ${SERVICE_NAME}..." ;
+        systemctl stop ${SERVICE_NAME} ;
+    fi
+}
+
+disable_service() {
+    if [ "`systemctl is-enabled ${SERVICE_NAME}`" == "enabled" ] ; then
+        echo "Force disabling ${SERVICE_NAME}..." ;
+        systemctl stop ${SERVICE_NAME} ;
+    fi
+}
+
+pre_upgrade() {
+    stop_service
+}
+
+
+pre_remove() {
+    stop_service
+    disable_service
+}
+
+post_install() {
+    systemctl daemon-reload
+}
+
+post_upgrade() {
+    systemctl daemon-reload
+}

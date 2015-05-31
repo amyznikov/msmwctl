@@ -10,6 +10,8 @@ arch=(i386 i486 i586 i686 x86_64 armv6h armv7h)
 license=('custom')
 depends=('wt')
 options=(docs !libtool !ccache !strip )
+backup=('etc/msmwctl.cfg')
+install=$pkgname.install
 
 build() {
   cd $src

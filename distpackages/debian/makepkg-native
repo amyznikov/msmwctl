@@ -43,6 +43,7 @@ make distclean all && make prefix=/usr DESTDIR=${dpkg} install || exit 1
 mkdir -p ${dpkg}/DEBIAN && cd ${dpkg} || exit 1
 
 echo "${control}" > DEBIAN/control
+echo "/etc/msmwctl.cfg" >> DEBIAN/conffiles
 
 for f in * ; do
   if [[ "$f" != "DEBIAN" ]] ; then

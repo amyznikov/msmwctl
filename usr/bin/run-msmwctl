@@ -1,2 +1,3 @@
 #! /bin/bash
-./msmwctl --docroot . --approot . --http-port 9090 --http-addr 0.0.0.0
+./msmwctl --docroot . --approot . --http-port 9090 --http-addr 0.0.0.0 $@
+

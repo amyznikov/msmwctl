@@ -13,11 +13,11 @@
 GuiRoot::GuiRoot(WContainerWidget * parent)
   : Base(parent)
 {
-  this->decorationStyle().setBackgroundColor(WColor("#CCFFCC"));
-  this->setMargin(WLength(0, WLength::Pixel));
-  this->setOffsets(WLength(0, WLength::Pixel));
-  this->setPadding(WLength(0, WLength::Pixel));
-
+  /*
+   * bgnd: 0097a7
+   * text: b3e0e5
+   *
+   */
   nav = new Wt::WNavigationBar(this);
   nav->setTitle("MSM2 Configuration Utility");
   nav->setResponsive(true);
@@ -35,5 +35,10 @@ GuiRoot::GuiRoot(WContainerWidget * parent)
   menu->addItem("Server Events", logView = new ServerLogViewer());
 
   mainForm->decorationStyle().setBackgroundColor(Wt::white);
+
+  this->decorationStyle().setBackgroundColor(WColor("#00bcd4")); // CCFFCC
+  this->setMargin(WLength(0, WLength::Pixel));
+  this->setOffsets(WLength(0, WLength::Pixel));
+  this->setPadding(WLength(0, WLength::Pixel));
 
 }

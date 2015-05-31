@@ -1,6 +1,8 @@
 #! /bin/bash
 
-src=$(pwd)/../..
-make -C ${src} distclean && \
-    makepkg -f &&  \
-    make -C ${src} distclean
+makepkg -f
+
+#src=$(pwd)/../..
+#make -C ${src} distclean && \
+#    makepkg -f &&  \
+#    make -C ${src} distclean

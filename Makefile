@@ -6,7 +6,7 @@
 SHELL=/bin/bash
 
 TARGET=usr/bin/msmwctl
-VERSION=0.0.1
+VERSION=0.0.2
 all : $(TARGET)
 
 cross   =
@@ -76,8 +76,9 @@ distclean: clean
 install: $(TARGET) $(DESTDIR)/$(bindir) $(DESTDIR)/$(resdir) 
 	cp usr/bin/msmwctl $(DESTDIR)/$(bindir)/msmwctl
 	cp -r usr/bin/* $(DESTDIR)/$(resdir) && rm -f $(DESTDIR)/$(resdir)/msmwctl 
-	mkdir -p $(DESTDIR)/etc/systemd/system && sed -e "s:BINDIR:$(bindir):g" -e "s:RESDIR:$(resdir):g" etc/systemd/system/msmwctl.service > $(DESTDIR)/etc/systemd/system/msmwctl.service
-	mkdir -p $(DESTDIR)/etc/init.d && sed -e "s:BINDIR:$(bindir):g" -e "s:RESDIR:$(resdir):g" etc/init.d/msmwctl > $(DESTDIR)/etc/init.d/msmwctl && chmod a+x $(DESTDIR)/etc/init.d/msmwctl
+	mkdir -p $(DESTDIR)/etc/systemd/system && sed -e "s:BINDIR:$(bindir):g" etc/systemd/system/msmwctl.service > $(DESTDIR)/etc/systemd/system/msmwctl.service
+	mkdir -p $(DESTDIR)/etc/init.d && sed -e "s:BINDIR:$(bindir):g" etc/init.d/msmwctl > $(DESTDIR)/etc/init.d/msmwctl && chmod a+x $(DESTDIR)/etc/init.d/msmwctl
+	sed -e "s:DOCROOT:$(resdir):g" -e "s:APPROOT:$(resdir):g" etc/msmwctl.cfg > $(DESTDIR)/etc/msmwctl.cfg	
 	[ -z $(DESTDIR) ] && [ ! -z $(SYSTEMCTL) ] && $(SYSTEMCTL) daemon-reload || echo "skip daemon-reload"
 
 

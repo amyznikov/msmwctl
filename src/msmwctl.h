@@ -8,6 +8,9 @@
 #ifndef __msmwctl_h__
 #define __msmwctl_h__
 
+#define WT_BUILDING /* for logger */
+#include <Wt/WLogger>
+
 #include <Wt/WServer>
 #include <Wt/WApplication>
 #include <Wt/WEnvironment>
@@ -53,7 +56,6 @@
 #include <Wt/WStandardItemModel>
 #include <Wt/WStandardItem>
 #include <Wt/WTimer>
-
 
 #include "msm.h"
 

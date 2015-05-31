@@ -10,6 +10,8 @@
 ServerLogViewer::ServerLogViewer(WContainerWidget * parent)
   : Base(parent)
 {
+  decorationStyle().setBackgroundColor(Wt::white);
+
   table = new WTable(this);
   table->setHeaderCount(1);
   table->setWidth(WLength("100%"));
