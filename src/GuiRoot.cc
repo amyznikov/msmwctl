@@ -19,7 +19,7 @@ GuiRoot::GuiRoot(WContainerWidget * parent)
    *
    */
   nav = new Wt::WNavigationBar(this);
-  nav->setTitle("MSM2 Configuration Utility");
+  nav->setTitle("MSM2 configuration tool");
   nav->setResponsive(true);
 
   stack = new WStackedWidget(this);
