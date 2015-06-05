@@ -70,20 +70,10 @@ LeftPane::LeftPane(WContainerWidget * parent)
 {
   vbox = new WVBoxLayout(this);
 
-  vbox->addWidget(table = new WTable(), 1, Wt::AlignLeft | Wt::AlignTop);
+  vbox->addWidget(reloadStreams = new WPushButton("Reload streams..."), 1, Wt::AlignLeft | Wt::AlignTop);
   vbox->addSpacing(WLength(1, WLength::FontEx));
   vbox->addWidget(streamsTreeView = new WTree(), 100, Wt::AlignTop);
 
-  //table->setWidth(WLength(100,WLength::Percentage));
-
-//  label = new WText("Server Address:", table->elementAt(0, 0));
-//  addrsEdit = new WLineEdit(table->elementAt(1, 0));
-  //addrsEdit->setText(getMsmAddress());
-  //  addrsEdit->setEmptyText("address[:port]");
-  // addrsEdit->setWidth(WLength(100,WLength::Percentage));
-  // table->elementAt(1, 0)->setWidth(WLength(100,WLength::Percentage));
-
-  reloadStreams = new WPushButton("Reload streams...", table->elementAt(1, 0));
   reloadStreams->clicked().connect(this, &LeftPane::onReloadClicked);
 
   streamsTreeView->setSelectable(true);
@@ -91,7 +81,6 @@ LeftPane::LeftPane(WContainerWidget * parent)
   streamsTreeView->itemSelectionChanged().connect(this, &LeftPane::onTreeViewSelectionChanged);
 
   setMinimumSize(WLength::Auto, WLength(100,WLength::FontEx));
-  // this->decorationStyle().setBorder(WBorder(WBorder::Solid, WBorder::Thin, Wt::gray));
 
   populateTree();
 }

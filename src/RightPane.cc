@@ -23,16 +23,6 @@ RightPane::RightPane(WContainerWidget * parent)
   stack->addWidget(outputProps = new OutputProps());
   stack->addWidget(sinkProps = new SinkProps());
   stack->setCurrentIndex(-1);
-
-  //this->decorationStyle().setBorder(WBorder(WBorder::Solid, WBorder::Medium, Wt::green));
-  // this->decorationStyle().setBackgroundColor(Wt::green);
-  this->setMargin(WLength(0,WLength::Pixel));
-  this->setOffsets(WLength(0, WLength::Pixel));
-
-  // stack->decorationStyle().setBackgroundColor(Wt::yellow);
-  stack->setMargin(WLength(0, WLength::Pixel));
-  stack->setOffsets(WLength(0, WLength::Pixel));
-  stack->setPadding(WLength(0, WLength::Pixel));
 }
 
 

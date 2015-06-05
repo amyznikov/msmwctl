@@ -21,21 +21,13 @@ PropertyPagesContainer::PropertyPagesContainer(WContainerWidget * parent)
   : Base(parent)
 {
   pageTemplate_ = new WTemplate(template_text, this);
-  // pageTemplate_->decorationStyle().setBackgroundColor(Wt::lightGray);
-  pageTemplate_->setMargin(WLength(0, WLength::Pixel));
-  pageTemplate_->setOffsets(WLength(0, WLength::Pixel));
-
 
   bindWidget(pageTemplate_,"legend", &legend_);
   bindWidget(pageTemplate_,"selector", &selector_, 0);
   bindWidget(pageTemplate_,"stack", &stack_);
   bindWidget(pageTemplate_,"save", &save_, 0);
 
-
-  //  this->decorationStyle().setBackgroundColor(Wt::cyan);
-  this->setMargin(WLength(0, WLength::Pixel));
-  this->setOffsets(WLength(0, WLength::Pixel));
-  this->setPadding(WLength(0, WLength::Pixel));
+  selector_->addStyleClass("page_selector");
 
   save_->setText("Save Changes...");
   selector_->hide();

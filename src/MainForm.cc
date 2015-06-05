@@ -13,7 +13,6 @@
 MainForm::MainForm(WContainerWidget * parent)
     : Base(parent)
 {
-  //decorationStyle().setBorder(WBorder(WBorder::Solid, WBorder::Thin, Wt::red));
   hbox = new WHBoxLayout(this);
   hbox->setContentsMargins(0,0,0,0);
   hbox->addWidget(leftPane = new LeftPane());

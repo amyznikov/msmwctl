@@ -16,7 +16,8 @@ SpecifyDynamicAndStaticQuality::SpecifyDynamicAndStaticQuality(WContainerWidget 
   vbox->addWidget(table = new WTable());
   vbox->addSpacing(WLength(4, WLength::FontEx));
 
-  table->setWidth(WLength(95, WLength::Percentage));
+//  table->setWidth(WLength(95, WLength::Percentage));
+  table->addStyleClass("prop_table");
   addwidget(table, "Name", &Name);
   addwidget(table, "Format", &Format);
   addwidget(table, "Enabled", &Enabled);

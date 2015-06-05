@@ -20,6 +20,47 @@ namespace Wt {
   LOGGER("msmwctl");
 }
 
+
+class WCustomBootstrapTheme :
+    public WBootstrapTheme
+{
+public:
+
+  typedef WBootstrapTheme
+      Base;
+
+  WCustomBootstrapTheme(WObject *parent = 0)
+      : Base(parent)
+  {
+    setVersion(WBootstrapTheme::Version3);
+    setResponsive(true);
+  }
+
+  virtual std::vector<WCssStyleSheet> styleSheets() const
+  {
+    /* bootstrap themes:
+     *  http://bootswatch.com
+     */
+
+    static const char * filenames[] = {
+        "3/css/bootstrap.css",
+        "3/css/custom.css",
+        "3/wt.css",
+    };
+
+    std::vector<WCssStyleSheet> result;
+    const std::string themePath = resourcesUrl();
+
+    for ( size_t i = 0; i < sizeof(filenames) / sizeof(filenames[0]); ++i ) {
+      result.push_back(WCssStyleSheet(WLink(themePath + filenames[i])));
+    }
+
+    return result;
+  }
+
+};
+
+
 class MSMApplication
     : public WApplication
 {
@@ -32,66 +73,19 @@ public:
       : Base(env)
   {
     setTitle("MSM2 Control Gui");
-    // setDefaultMsmAddress(env);
     setMediaServerAddress(env);
 
-    // messageResourceBundle().use(appRoot() + "templates");
-
-    const std::string theme = get_theme(env);
-
-    if ( theme == "bootstrap3" ) {
-      WBootstrapTheme *bootstrapTheme = new WBootstrapTheme(this);
-      bootstrapTheme->setVersion(WBootstrapTheme::Version3);
-      bootstrapTheme->setResponsive(true);
-      setTheme(bootstrapTheme);
-      //useStyleSheet("resources/themes/bootstrap/3/bootstrap-theme.min.css");
-    }
-    else if ( theme == "bootstrap2" ) {
-      WBootstrapTheme *bootstrapTheme = new WBootstrapTheme(this);
-      bootstrapTheme->setResponsive(true);
-      setTheme(bootstrapTheme);
-    }
-    else {
-      setTheme(new WCssTheme(theme));
-    }
-
-//    useStyleSheet("style/everywidget.css");
-//    useStyleSheet("style/dragdrop.css");
-//    useStyleSheet("style/combostyle.css");
-//    useStyleSheet("style/pygments.css");
-//    useStyleSheet("style/layout.css");
-
-//    root()->resize(WLength(100, WLength::Percentage),WLength(1000, WLength::Percentage));
-//    root()->decorationStyle().setBorder(WBorder(WBorder::Solid, WBorder::Thin, Wt::black));
-
-//    WVBoxLayout * vbox = new WVBoxLayout(root());
-//    vbox->addWidget(new MainForm());
+    setTheme(new WCustomBootstrapTheme(this));
+    useStyleSheet("style/site.css");
 
     enableUpdates(true);
 
     new GuiRoot(root());
   }
 
-  static std::string get_theme(const WEnvironment& env) {
-    const std::string * themePtr = env.getParameter("theme");
-    return themePtr ? *themePtr : "bootstrap3";
-  }
-
   static WApplication * create(const WEnvironment& env) {
     return new MSMApplication(env);
   }
-
-//  static void setDefaultMsmAddress(const WEnvironment& env)
-//  {
-//    char addrs[256] = "";
-//    char host[256] = "";
-//    uint16_t port;
-//
-//    sscanf(env.hostName().c_str(), "%255[^:]:%hu", host, &port);
-//    sprintf(addrs, "%s:%u", host, MSM_DEFAULT_CTRL_PORT);
-//
-//    setMsmAddress(addrs);
-//  }
 
   static void setMediaServerAddress(const WEnvironment& env)
   {

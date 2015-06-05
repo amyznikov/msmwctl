@@ -1,0 +1,73 @@
+/* 
+ * fieldset look 
+ */
+
+
+fieldset {
+    margin: 4px;                                                                                                                                                                                                                                                               
+    border: 1px solid black;                                                                                                                                                                                                                                                   
+    padding: 4px;
+}
+
+legend {
+    margin: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    width: auto;
+    border: 0;
+}
+
+/* 
+ * property page selector
+ */
+
+.page_selector {
+    width: auto;
+}
+
+
+/*
+ * property page table
+ */
+
+.prop_table {
+	width: 90%;
+	margin: 0;
+	padding: 0;
+}
+
+.prop_table tr, td {
+	border: 1px solid #CCCCCC;
+	padding: 0;
+	margin: 0;
+}
+
+.prop_table label {
+	display: inline-block;
+	font: 12px Helv;
+	margin-left: 4px;
+	margin-top: 4px;
+	font-weight: bold;
+	padding: 0;
+}
+
+.prop_table input {
+	font: 12px Helv;
+	border: none;
+	margin-left: 4px;
+	margin-top: 2px;
+	margin-right: 4px;
+	padding: 0;
+	height: 18px;
+}
+
+.prop_table input:focus {
+	border: 1px solid black;
+}
+
+.prop_table tr:hover {
+	background: #EEEEEE;
+	padding: 0;
+}	
+
+

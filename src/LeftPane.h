@@ -45,8 +45,6 @@ private:
 
 private:
   WVBoxLayout * vbox;
-  WTable * table;
-  //WText * label;
   WPushButton * reloadStreams;
   WTree * streamsTreeView;
 

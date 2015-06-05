@@ -16,8 +16,7 @@ SpecifySinkProps :: SpecifySinkProps(WContainerWidget * parent)
   vbox->setContentsMargins(0,0,0,0);
   vbox->addWidget(table = new WTable(), 1, Wt::AlignTop);
 
-  table->setMargin(0);
-  table->setWidth(WLength(95,WLength::Percentage));
+  table->addStyleClass("prop_table");
   addwidget(table, "Name", &Name);
   addwidget(table, "Url", &Url);
   addwidget(table, "Format", &Format);
