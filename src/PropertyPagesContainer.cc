@@ -27,13 +27,15 @@ PropertyPagesContainer::PropertyPagesContainer(WContainerWidget * parent)
   bindWidget(pageTemplate_,"stack", &stack_);
   bindWidget(pageTemplate_,"save", &save_, 0);
 
-  selector_->addStyleClass("page_selector");
-
-  save_->setText("Save Changes...");
+  selector_->addStyleClass("btn-primary dropdown-toggle page_selector");
   selector_->hide();
 
+  selector_->setMenu(menu_ = new WPopupMenu());
+  menu_->itemSelected().connect(this, &PropertyPagesContainer::selectorChanged);
+
+
+  save_->setText("Save Changes...");
   save_->clicked().connect(this, &PropertyPagesContainer::onSaveChanges);
-  selector_->activated().connect(this, &PropertyPagesContainer::selectorChanged);
 }
 
 
@@ -47,14 +49,29 @@ void PropertyPagesContainer::showSaveChanges(bool fshow) {
 }
 
 
-void PropertyPagesContainer::selectorChanged(int curSel)
+//void PropertyPagesContainer::selectorChanged(int curSel)
+//{
+//  WWidget * prev, * current;
+//  prev = stack_->currentWidget();
+//  stack_->setCurrentIndex(curSel);
+//  current = stack_->currentWidget();
+//  if ( prev != current ) {
+//    onPageSelectionChanged(prev, current);
+//  }
+//}
+
+void PropertyPagesContainer::selectorChanged(WMenuItem * item)
 {
-  WWidget * prev, * current;
-  prev = stack_->currentWidget();
-  stack_->setCurrentIndex(curSel);
-  current = stack_->currentWidget();
-  if ( prev != current ) {
-    onPageSelectionChanged(prev, current);
+  int index = (int) (ssize_t) item->data();
+  if ( index >= 0 ) {
+    WWidget * prev, * current;
+    prev = stack_->currentWidget();
+    stack_->setCurrentIndex(index);
+    current = stack_->currentWidget();
+    if ( prev != current ) {
+      selector_->setText(item->text());
+      onPageSelectionChanged(prev, current);
+    }
   }
 }
 
@@ -72,8 +89,8 @@ void PropertyPagesContainer::setLegend(const WString & legend) {
 
 void PropertyPagesContainer::addPage(const WString & label, WWidget * widget)
 {
-  selector_->addItem(label);
   stack_->addWidget(widget);
+  (menu_->addItem(label))->setData((void*) (ssize_t) stack_->indexOf(widget));
   if ( !selector_->isVisible() ) {
     selector_->show();
   }
@@ -89,5 +106,8 @@ int PropertyPagesContainer::getCurrentPageIndex() {
 
 void PropertyPagesContainer::setCurrentPage(WWidget * widget) {
   stack_->setCurrentWidget(widget);
-  selector_->setCurrentIndex(stack_->currentIndex());
+  WMenuItem * item = menu_->itemAt(stack_->currentIndex());
+  if ( item ) {
+    selector_->setText(item->text());
+  }
 }

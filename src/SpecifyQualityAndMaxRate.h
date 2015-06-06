@@ -9,6 +9,7 @@
 #define __specifyqualityandmaxrate_h__
 
 
+class PropertyTable;
 class SpecifyQualityAndMaxRate
     : public WContainerWidget {
 public:
@@ -19,7 +20,7 @@ public:
   bool getChanges(MsmOutput * output);
 
 private:
-  WTable * table;
+  PropertyTable * table;
   WLineEdit * Name;
   WLineEdit * Format;
   WLineEdit * Enabled;

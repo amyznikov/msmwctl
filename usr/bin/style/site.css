@@ -5,17 +5,23 @@
 
 fieldset {
     margin: 4px;                                                                                                                                                                                                                                                               
-    border: 1px solid black;                                                                                                                                                                                                                                                   
+    border: 0; /*1px solid black; */                                                                                                                                                                                                                                                   
     padding: 4px;
 }
 
 legend {
-    margin: 16px;
-    padding-left: 16px;
-    padding-right: 16px;
-    width: auto;
-    border: 0;
+	width: auto;
+	border: 0;
+	margin: 0px;
+	margin-left: 4px;
+	paddin: 0px;
+	padding-left: 4px;
+	padding-right: 16px;
+	padding-top: 0px;
+	padding-bottom: 16px;
 }
+
+
 
 /* 
  * property page selector
@@ -44,6 +50,7 @@ legend {
 
 .prop_table label {
 	display: inline-block;
+	width: 99%;
 	font: 12px Helv;
 	margin-left: 4px;
 	margin-top: 4px;
@@ -52,6 +59,8 @@ legend {
 }
 
 .prop_table input {
+    display: inline-block;
+	width: 99%;
 	font: 12px Helv;
 	border: none;
 	margin-left: 4px;
@@ -62,7 +71,7 @@ legend {
 }
 
 .prop_table input:focus {
-	border: 1px solid black;
+	/*border: 1px solid black; */
 }
 
 .prop_table tr:hover {
@@ -71,3 +80,44 @@ legend {
 }	
 
 
+.confirm-delete {
+}
+
+/*********************/
+
+/* .Wt-tableview 
+ * .Wt-header
+ * .Wt-tv-contents
+ * .Wt-tv-c2
+ * .headerrh 
+ * */
+
+.streamstab .Wt-tableview, .streamstab .Wt-header {
+	border: 0;
+}
+
+.streamstab .Wt-headerdiv {
+	border-top: 1px solid #AAAAAA;
+	background: #EEEEEE;
+}
+
+.streamstab .Wt-tv-contents {
+	border: 1px solid #CCCCCC;
+}
+
+.eventlog table, tr {
+	width: 100%;
+	border: 1px solid #CCCCCC;
+}
+
+.eventlog th {
+	background: #EEEEEE;
+	padding: 0px;
+	padding-left: 16px;
+}
+
+.eventlog td {
+	border: 0px;
+	padding: 0px;
+	padding-left: 16px;
+}

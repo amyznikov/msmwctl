@@ -16,26 +16,15 @@ public:
       Base;
 
   StreamListView(WContainerWidget * parent = 0);
-  ~StreamListView();
   void refreshStreams();
 
-private:
-  void selectorChanged(int curSel);
-  void populateInputs();
-  void populateOutputs();
-  void populateSinks();
-  void populateSessions();
 
 private:
-  WTemplate * pageTemplate;
-  WText * legend;
-  WComboBox * selector;
-  WPushButton * refresh;
-  WStackedWidget * stack;
-  WTableView * inputsTable;
-  WTableView * outputsTable;
-  WTableView * sinksTable;
-  WTableView * sessionsTable;
+  WTabWidget * tab;
+  WWidget * inputs;
+  WWidget * outputs;
+  WWidget * sinks;
+  WWidget * sessions;
 };
 
 

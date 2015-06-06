@@ -9,14 +9,6 @@
 
 #define count_of(x) (sizeof(x)/sizeof((x)[0]))
 
-static const char template_text [] =
-    " <legend>${legend}</legend>"
-    "   ${selector} ${refresh}"
-    "   <p>${stack}</p>"
-    "";
-
-
-
 namespace {
 
 struct column_decs {
@@ -31,8 +23,8 @@ struct column_decs {
 #define INPUT_COLUMN_STATUS         4
 static const column_decs input_columns[] = {
     { "input name", WLength(20, WLength::FontEx) },
-    { "state", WLength(10, WLength::FontEx) },
-    { "enabled", WLength(10, WLength::FontEx) },
+    { "state", WLength(20, WLength::FontEx) },
+    { "enabled", WLength(20, WLength::FontEx) },
     { "start time", WLength(20, WLength::FontEx) },
     { "status", WLength(20, WLength::FontEx) },
 };
@@ -43,8 +35,8 @@ static const column_decs input_columns[] = {
 #define OUTPUT_COLUMN_ENABLED       2
 static const column_decs output_columns[] = {
     { "output name", WLength(20, WLength::FontEx)},
-    { "state", WLength(10, WLength::FontEx)},
-    { "enabled", WLength(4, WLength::FontEx)},
+    { "state", WLength(20, WLength::FontEx)},
+    { "enabled", WLength(20, WLength::FontEx)},
 };
 
 
@@ -54,9 +46,9 @@ static const column_decs output_columns[] = {
 #define SINK_COLUMN_URL             3
 static const column_decs sink_columns[] = {
     { "sink name", WLength(20,WLength::FontEx)},
-    { "state", WLength(10, WLength::FontEx)},
-    { "format", WLength(10, WLength::FontEx)},
-    { "URL", WLength(30, WLength::FontEx)},
+    { "state", WLength(20, WLength::FontEx)},
+    { "format", WLength(20, WLength::FontEx)},
+    { "URL", WLength(20, WLength::FontEx)},
 };
 
 
@@ -65,35 +57,10 @@ static const column_decs sink_columns[] = {
 #define SESSION_COLUMN_AGENT        2
 static const column_decs session_columns[] = {
     { "session name", WLength(20, WLength::FontEx) },
-    { "address", WLength(10, WLength::FontEx)},
-    { "agent", WLength(10, WLength::FontEx)},
+    { "address", WLength(20, WLength::FontEx)},
+    { "agent", WLength(20, WLength::FontEx)},
 };
 
-}
-
-
-static WTableView * createTable(const column_decs columns[], int nb_columns)
-{
-  WTableView * table;
-  WStandardItemModel * model;
-
-  table = new WTableView();
-  table->setModel(model = new WStandardItemModel(0, 0, table));
-  model->insertColumns(0, nb_columns);
-
-  table->setWidth(WLength(100, WLength::Percentage));
-  table->setSortingEnabled(true);
-  table->setColumnResizeEnabled(true);
-  table->setAlternatingRowColors(true);
-
-  for ( int i = 0, n = nb_columns; i < n; ++i ) {
-    model->setHeaderData(i, Wt::Orientation::Horizontal, boost::any(WString::fromUTF8(columns[i].name)));
-    table->setHeaderAlignment(i, Wt::AlignCenter);
-    table->setColumnAlignment(i, Wt::AlignLeft);
-    table->setColumnWidth(i, columns[i].width);
-  }
-
-  return table;
 }
 
 
@@ -109,155 +76,287 @@ static void setRowCount(WStandardItemModel * model, int count)
 }
 
 
+static inline void setColumnWidth(WTableView * table, int index, size_t width)
+{
+  table->setColumnWidth(index, WLength(width, WLength::FontEx));
+}
+
+static inline void adjustTableSize(WTableView * tbl, const column_decs columns[], const size_t cw[], size_t nb_columns)
+{
+  size_t i, n, x;
+  for ( i = 0, n = 0; i < nb_columns; ++i ) {
+    n += (x = std::max(cw[i], strlen(columns[i].name) + 4));
+    tbl->setColumnWidth(i, WLength(x, WLength::FontEx));
+  }
+}
+
+static WTableView * createTable(const column_decs columns[], int nb_columns, WContainerWidget * parent = 0)
+{
+  WTableView * table;
+  WStandardItemModel * model;
+
+  table = new WTableView(parent);
+  table->setModel(model = new WStandardItemModel(0, 0, table));
+  model->insertColumns(0, nb_columns);
+
+  table->setSortingEnabled(true);
+  table->setColumnResizeEnabled(true);
+
+  for ( int i = 0, n = nb_columns; i < n; ++i ) {
+    model->setHeaderData(i, Wt::Orientation::Horizontal, boost::any(WString::fromUTF8(columns[i].name)));
+    table->setHeaderAlignment(i, Wt::AlignLeft);
+    table->setColumnAlignment(i, Wt::AlignLeft);
+    setColumnWidth(table, i, strlen(columns[i].name) + 4);
+  }
+
+  return table;
+}
+
+
+class StreamsTab
+    : public WContainerWidget
+{
+protected:
+  WTableView * table;
+  WPushButton * refreshButton;
+
+  StreamsTab(const column_decs columns[], int nb_columns, WContainerWidget * parent = 0)
+      : WContainerWidget(parent)
+  {
+    addStyleClass("streamstab");
+
+    WVBoxLayout * vbox = new WVBoxLayout(this);
+    vbox->addWidget(table = createTable(columns, nb_columns));
+    vbox->addWidget(refreshButton = new WPushButton("Refresh"),1, Wt::AlignLeft);
+    refreshButton->clicked().connect(this, &StreamsTab::populateTable);
+  }
+
+public:
+  virtual void populateTable() = 0;
+};
+
+
+class InputsTab
+    : public StreamsTab
+{
+public:
+  InputsTab(WContainerWidget* parent = 0)
+    : StreamsTab(input_columns, count_of(input_columns), parent) {}
+
+  void populateTable()
+  {
+    WStandardItemModel * model;
+    std::vector<MsmInput> inputs;
+
+    if ( !msmLoadInputs(&inputs) ) {
+      setRowCount((WStandardItemModel*) table->model(), 0);
+    }
+    else {
+
+      size_t cw [count_of(input_columns)] = {0};
+      size_t i, n, x;
+      std::string s;
+
+      setRowCount(model = (WStandardItemModel*) table->model(), n = inputs.size());
+
+      for ( i = 0; i < n; ++i ) {
+        const MsmInput & input = inputs[i];
+
+        cw[INPUT_COLUMN_NAME] = std::max(cw[INPUT_COLUMN_NAME], (s = input.getName()).size());
+        model->setData(i, INPUT_COLUMN_NAME, boost::any(s));
+
+        cw[INPUT_COLUMN_STATE] = std::max(cw[INPUT_COLUMN_STATE], (s = msm_state_string(input.getState())).size());
+        model->setData(i, INPUT_COLUMN_STATE, boost::any(s));
+
+        cw[INPUT_COLUMN_ENABLED] = std::max(cw[INPUT_COLUMN_ENABLED], (s = t2s(input.getEnabled())).size());
+        model->setData(i, INPUT_COLUMN_ENABLED, boost::any(s));
+
+        cw[INPUT_COLUMN_START_TIME] = std::max(cw[INPUT_COLUMN_START_TIME], (s = input.getStartTime()).size());
+        model->setData(i, INPUT_COLUMN_START_TIME, boost::any(s));
+      }
+
+      adjustTableSize(table, input_columns, cw, count_of(input_columns));
+    }
+
+  }
+};
+
+
+class OutputsTab
+    : public StreamsTab
+{
+public:
+  OutputsTab(WContainerWidget* parent = 0)
+    : StreamsTab(output_columns, count_of(output_columns), parent) {}
+
+  void populateTable()
+  {
+    WStandardItemModel * model;
+    std::vector<MsmOutput> outputs;
+
+    if ( !msmLoadOutputs(&outputs) ) {
+      setRowCount((WStandardItemModel*) table->model(), 0);
+    }
+    else {
+
+      size_t cw [count_of(output_columns)] = {0};
+      size_t i, n;
+      std::string s;
+      WString ws;
+
+      setRowCount(model = (WStandardItemModel*) table->model(), n = outputs.size());
+
+      for ( i = 0; i < n; ++i ) {
+        const MsmOutput & output = outputs[i];
+
+        ws = WString("{1}/{2}").arg(output.getInputName()).arg(output.getName());
+        cw[OUTPUT_COLUMN_NAME] = std::max(cw[OUTPUT_COLUMN_NAME], ws.toUTF8().size());
+        model->setData(i, OUTPUT_COLUMN_NAME, boost::any(ws));
+
+        cw[OUTPUT_COLUMN_STATE] = std::max(cw[OUTPUT_COLUMN_STATE], (s = msm_state_string(output.getState())).size());
+        model->setData(i, OUTPUT_COLUMN_STATE, boost::any(s));
+
+        cw[OUTPUT_COLUMN_ENABLED] = std::max(cw[OUTPUT_COLUMN_ENABLED],(s=t2s(output.getEnabled())).size());
+        model->setData(i, OUTPUT_COLUMN_ENABLED, boost::any(s));
+      }
+
+      for ( i = 0; i < count_of(output_columns); ++i ) {
+        setColumnWidth(table, i, std::max(cw[i], strlen(output_columns[i].name) + 4));
+      }
+
+    }
+  }
+};
+
+
+class SinksTab
+  : public StreamsTab
+{
+public:
+  SinksTab(WContainerWidget* parent = 0)
+    : StreamsTab(sink_columns, count_of(sink_columns), parent) {}
+
+  void populateTable()
+  {
+    WStandardItemModel * model;
+    std::vector<MsmSink> sinks;
+
+    if ( !msmLoadSinks(&sinks) ) {
+      setRowCount((WStandardItemModel*) table->model(), 0);
+    }
+    else {
+
+      size_t cw [count_of(sink_columns)] = {0};
+      size_t i, n;
+      std::string s;
+      WString ws;
+
+      setRowCount(model = (WStandardItemModel*) table->model(), n = sinks.size());
+
+      for ( i = 0; i < n; ++i ) {
+        const MsmSink & sink = sinks[i];
+
+        ws = WString("{1}/{2}/{3}").arg(sink.getInputName()).arg(sink.getOutputName()).arg(sink.getName());
+        cw[SINK_COLUMN_NAME] = std::max(cw[SINK_COLUMN_NAME],ws.toUTF8().size());
+        model->setData(i, SINK_COLUMN_NAME, boost::any(ws));
+
+
+        cw[SINK_COLUMN_STATE] = std::max(cw[SINK_COLUMN_STATE], (s = msm_state_string(sink.getState())).size());
+        model->setData(i, SINK_COLUMN_STATE, s);
+
+        cw[SINK_COLUMN_FORMAT] = std::max(cw[SINK_COLUMN_FORMAT], (s = sink.getFormat()).size());
+        model->setData(i, SINK_COLUMN_FORMAT, s);
+
+        cw[SINK_COLUMN_URL] = std::max(cw[SINK_COLUMN_URL], (s = sink.getUrl()).size());
+        model->setData(i, SINK_COLUMN_URL, s);
+      }
+
+      for ( i = 0; i < count_of(sink_columns); ++i ) {
+        setColumnWidth(table, i, std::max(cw[i], strlen(sink_columns[i].name) + 4));
+      }
+
+    }
+  }
+};
+
+
+
+class SessionsTab
+    : public StreamsTab
+{
+public:
+  SessionsTab(WContainerWidget* parent = 0)
+    : StreamsTab(session_columns, count_of(session_columns), parent) {}
+
+  void populateTable()
+  {
+    WStandardItemModel * model;
+    std::vector<MsmSession> sessions;
+
+    if ( !msmLoadSessions(&sessions) ) {
+      setRowCount((WStandardItemModel*) table->model(), 0);
+    }
+    else {
+
+      size_t cw[count_of(session_columns)] = { 0 };
+      size_t i, n;
+      std::string s;
+
+      setRowCount(model = (WStandardItemModel*) table->model(), n = sessions.size());
+
+      for ( i = 0; i < n; ++i ) {
+
+        const MsmSession & session = sessions[i];
+
+        cw[SESSION_COLUMN_NAME] = std::max(cw[SESSION_COLUMN_NAME],(s=session.getName()).size());
+        model->setData(i, SESSION_COLUMN_NAME, s);
+
+        cw[SESSION_COLUMN_ADDRESS] = std::max(cw[SESSION_COLUMN_ADDRESS], (s = session.getAddress()).size());
+        model->setData(i, SESSION_COLUMN_ADDRESS, s);
+
+        cw[SESSION_COLUMN_AGENT] = std::max(cw[SESSION_COLUMN_AGENT], (s = session.getAgent()).size());
+        model->setData(i, SESSION_COLUMN_AGENT, s);
+      }
+
+      for ( i = 0; i < count_of(session_columns); ++i ) {
+        setColumnWidth(table, i, std::max(cw[i], strlen(session_columns[i].name) + 4));
+      }
+
+    }
+  }
+};
+
+
+
+
+
 
 StreamListView::StreamListView(WContainerWidget * parent)
   : Base(parent)
 {
-  pageTemplate = new WTemplate(template_text, this);
-  bindWidget(pageTemplate,"legend", &legend);
-  bindWidget(pageTemplate,"selector", &selector, 0);
-  bindWidget(pageTemplate,"refresh", &refresh, 0);
-  bindWidget(pageTemplate,"stack", &stack);
-
-  selector->addItem("Show Inputs");
-  stack->addWidget(inputsTable = createTable(input_columns, count_of(input_columns)));
-
-  selector->addItem("Show Outputs");
-  stack->addWidget(outputsTable = createTable(output_columns, count_of(output_columns)));
-
-  selector->addItem("Show Sinks");
-  stack->addWidget(sinksTable = createTable(sink_columns, count_of(sink_columns)));
-
-  selector->addItem("Show Sessions");
-  stack->addWidget(sessionsTable = createTable(session_columns, count_of(session_columns)));
-
-  selector->activated().connect(this, &StreamListView::selectorChanged);
-
-  refresh->setText("Refresh...");
-  refresh->clicked().connect(this, &StreamListView::refreshStreams);
+  tab = new WTabWidget(this);
+  tab->setStyleClass("tabwidget");
+  tab->addTab(inputs = new InputsTab(), "Inputs");
+  tab->addTab(outputs = new OutputsTab(), "Outputs");
+  tab->addTab(sinks = new SinksTab(), "Sinks");
+  tab->addTab(sessions = new SessionsTab(), "Sessions");
 }
 
-StreamListView::~StreamListView()
-{
-}
-
-void StreamListView::selectorChanged(int /*cursel*/) {
-  refreshStreams();
-}
 
 void StreamListView::refreshStreams()
 {
-  switch (selector->currentIndex()) {
-    case 0: /* show inputs */
-    default:
-      populateInputs();
-    break;
+  StreamsTab * currentPage;
 
-    case 1: /* show outputs */
-      populateOutputs();
-    break;
-
-    case 2: /* show sinks */
-      populateSinks();
-    break;
-
-    case 3: /* show sessions */
-      populateSessions();
-    break;
+  switch (tab->currentIndex()) {
+    case 0: currentPage = (StreamsTab * ) inputs; break;
+    case 1: currentPage = (StreamsTab * ) outputs; break;
+    case 2: currentPage = (StreamsTab * ) sinks; break;
+    case 3: currentPage = (StreamsTab * ) sessions; break;
+    default: currentPage = 0; break;
   }
-}
 
-void StreamListView::populateInputs()
-{
-  WStandardItemModel * model;
-  std::vector<MsmInput> inputs;
-  size_t i, n;
-
-  stack->setCurrentWidget(inputsTable);
-
-  if ( !msmLoadInputs(&inputs) ) {
-    setRowCount((WStandardItemModel*) inputsTable->model(), 0);
-  }
-  else {
-    setRowCount(model = (WStandardItemModel*) inputsTable->model(), n = inputs.size());
-    for ( i = 0; i < n; ++i ) {
-      const MsmInput & input = inputs[i];
-      model->setData(i, INPUT_COLUMN_NAME, boost::any(WString::fromUTF8(input.getName())));
-      model->setData(i, INPUT_COLUMN_STATE, boost::any(WString::fromUTF8(msm_state_string(input.getState()))));
-      model->setData(i, INPUT_COLUMN_ENABLED, boost::any(WString::fromUTF8(t2s(input.getEnabled()))));
-      model->setData(i, INPUT_COLUMN_START_TIME, boost::any(WString::fromUTF8(input.getStartTime())));
-    }
-  }
-}
-
-void StreamListView::populateOutputs()
-{
-  WStandardItemModel * model;
-  std::vector<MsmOutput> outputs;
-  size_t i, n;
-
-  stack->setCurrentWidget(outputsTable);
-
-  if ( !msmLoadOutputs(&outputs) ) {
-    setRowCount((WStandardItemModel*) outputsTable->model(), 0);
-  }
-  else {
-    setRowCount(model = (WStandardItemModel*) outputsTable->model(), n = outputs.size());
-    for ( i = 0; i < n; ++i ) {
-      const MsmOutput & output = outputs[i];
-      model->setData(i, OUTPUT_COLUMN_NAME, boost::any(WString("{1}/{2}").arg(output.getInputName()).arg(output.getName())));
-      model->setData(i, OUTPUT_COLUMN_STATE, boost::any(WString(msm_state_string(output.getState()))));
-      model->setData(i, OUTPUT_COLUMN_ENABLED, boost::any(WString(t2s(output.getEnabled()))));
-    }
-  }
-}
-
-void StreamListView::populateSinks()
-{
-  WStandardItemModel * model;
-  std::vector<MsmSink> sinks;
-  size_t i, n;
-
-  stack->setCurrentWidget(sinksTable);
-
-  if ( !msmLoadSinks(&sinks) ) {
-    setRowCount((WStandardItemModel*) sinksTable->model(), 0);
-  }
-  else {
-    setRowCount(model = (WStandardItemModel*) sinksTable->model(), n = sinks.size());
-    for ( i = 0; i < n; ++i ) {
-      const MsmSink & sink = sinks[i];
-      model->setData(i, SINK_COLUMN_NAME, boost::any(WString("{1}/{2}/{3}")
-          .arg(sink.getInputName())
-          .arg(sink.getOutputName())
-          .arg(sink.getName())));
-
-      model->setData(i, SINK_COLUMN_STATE, boost::any(WString(msm_state_string(sink.getState()))));
-      model->setData(i, SINK_COLUMN_FORMAT, boost::any(WString::fromUTF8(sink.getFormat())));
-      model->setData(i, SINK_COLUMN_URL, boost::any(WString::fromUTF8(sink.getUrl())));
-    }
-  }
-}
-
-void StreamListView::populateSessions()
-{
-  WStandardItemModel * model;
-  std::vector<MsmSession> sessions;
-  size_t i, n;
-
-  stack->setCurrentWidget(sessionsTable);
-
-  if ( !msmLoadSessions(&sessions) ) {
-    setRowCount((WStandardItemModel*) sessionsTable->model(), 0);
-  }
-  else {
-    setRowCount(model = (WStandardItemModel*) sessionsTable->model(), n = sessions.size());
-    for ( i = 0; i < n; ++i ) {
-      const MsmSession & session = sessions[i];
-      model->setData(i, SESSION_COLUMN_NAME, boost::any(WString::fromUTF8(session.getName())));
-      model->setData(i, SESSION_COLUMN_ADDRESS, boost::any(WString::fromUTF8(session.getAddress())));
-      model->setData(i, SESSION_COLUMN_AGENT, boost::any(WString::fromUTF8(session.getAgent())));
-    }
+  if ( currentPage != 0 ) {
+    currentPage->populateTable();
   }
 }
 

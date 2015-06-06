@@ -8,6 +8,7 @@
 #ifndef __SpecifyExpertInputProps_h__
 #define __SpecifyExpertInputProps_h__
 
+class PropertyTable;
 class SpecifyExpertInputProps
     : public WContainerWidget {
 public:
@@ -18,7 +19,7 @@ public:
   bool getChanges(MsmInput * input);
 
 private:
-  WTable * table;
+  PropertyTable * table;
   WLineEdit * Name;
   WLineEdit * Source;
   WLineEdit * Format;

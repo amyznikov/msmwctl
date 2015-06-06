@@ -6,6 +6,7 @@
  */
 
 #include "msmwctl.h"
+#include "PropertyTable.h"
 #include "SpecifyExpertInputProps.h"
 
 
@@ -14,22 +15,23 @@ SpecifyExpertInputProps::SpecifyExpertInputProps(WContainerWidget * parent)
 {
   WVBoxLayout * vbox = new WVBoxLayout(this);
   vbox->setContentsMargins(0, 0, 0, 0);
-  vbox->addWidget(table = new WTable(), 1, Wt::AlignTop);
 
-  table->addStyleClass("prop_table");
-  addwidget(table, "Name", &Name);
-  addwidget(table, "Source", &Source);
-  addwidget(table, "Format", &Format);
-  addwidget(table, "Enabled", &Enabled);
-  addwidget(table, "CtxOpts", &CtxOpts);
-  addwidget(table, "DecOpts", &DecOpts);
-  addwidget(table, "Live", &Live);
-  addwidget(table, "IgnoreErrors", &IgnoreErrors);
-  addwidget(table, "FastProbe", &FastProbe);
-  addwidget(table, "GenPts", &GenPts);
-  addwidget(table, "RE", &RE);
+  vbox->addWidget(table = new PropertyTable());
+  table->add("Name", &Name);
+  table->add("Source", &Source);
+  table->add("Format", &Format);
+  table->add("Enabled", &Enabled);
+  table->add("CtxOpts", &CtxOpts);
+  table->add("DecOpts", &DecOpts);
+  table->add("Live", &Live);
+  table->add("IgnoreErrors", &IgnoreErrors);
+  table->add("FastProbe", &FastProbe);
+  table->add("GenPts", &GenPts);
+  table->add("RE", &RE);
 
   // table->enterPressed().connect(this, &SpecifyExpertInputProps::onSaveChanges);
+
+  // vbox->addSpacing(WLength(4, WLength::FontEx));
 }
 
 void SpecifyExpertInputProps::setInputProps(const MsmInput * input)

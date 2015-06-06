@@ -56,6 +56,8 @@
 #include <Wt/WStandardItemModel>
 #include <Wt/WStandardItem>
 #include <Wt/WTimer>
+#include <Wt/WPopupMenu>
+#include <Wt/WPopupMenuItem>
 
 #include "msm.h"
 
@@ -73,7 +75,7 @@ static inline void bindWidget(WTemplate * t, const std::string & name, T ** obj,
 
 
 template<class T>
-static void addwidget(WTable * table, const char * legend, T ** obj, int width = 100)
+static void addwidget(WTable * table, const char * legend, T ** obj, int width = 0)
 {
   WLabel * label;
   int row;
@@ -81,8 +83,8 @@ static void addwidget(WTable * table, const char * legend, T ** obj, int width =
   row = table->rowCount();
   label = new WLabel(legend, table->elementAt(row, 0));
   (*obj) = new T(table->elementAt(row, 1));
-  table->elementAt(row, 0)->setWidth(WLength(25, WLength::Percentage));
-  table->elementAt(row, 1)->setWidth(WLength(70, WLength::Percentage));
+//  table->elementAt(row, 0)->setWidth(WLength(25, WLength::Percentage));
+//  table->elementAt(row, 1)->setWidth(WLength(70, WLength::Percentage));
   label->setBuddy((*obj));
   if ( width > 0 ) {
     (*obj)->setWidth(WLength(width, WLength::Percentage));

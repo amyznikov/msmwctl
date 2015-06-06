@@ -8,6 +8,7 @@
 #ifndef __SpecifyExpertOutputProps_h__
 #define __SpecifyExpertOutputProps_h__
 
+class PropertyTable;
 class SpecifyExpertOutputProps
     : public WContainerWidget {
 public:
@@ -19,7 +20,7 @@ public:
   bool getChanges(MsmOutput * output);
 
 private:
-  WTable * table;
+  PropertyTable * table;
   WLineEdit * Name;
   WLineEdit * Format;
   WLineEdit * CtxOpts;

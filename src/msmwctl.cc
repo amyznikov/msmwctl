@@ -153,7 +153,6 @@ int main(int argc, char *argv[])
         return 0;
       }
 
-
       /* Determine user's home direcory */
       if ( (uid = geteuid()) == 0 || !(pw = getpwuid(uid)) ) {
         /* Follow 'Filesystem Hierarchy Standard' http://www.pathname.com/fhs/2.2/fhs-5.8.html */

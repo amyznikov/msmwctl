@@ -9,6 +9,7 @@
 #define __SpecifySinkProps_h__
 
 
+class PropertyTable;
 class SpecifySinkProps
     : public WContainerWidget {
 public:
@@ -19,7 +20,7 @@ public:
   bool getChanges(MsmSink * sink);
 
 private:
-  WTable * table;
+  PropertyTable * table;
   WLineEdit * Name;
   WLineEdit * Url;
   WLineEdit * Format;

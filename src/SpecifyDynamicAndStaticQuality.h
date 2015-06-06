@@ -8,7 +8,7 @@
 #ifndef __SpecifyDynamicAndStaticQuality_h__
 #define __SpecifyDynamicAndStaticQuality_h__
 
-
+class PropertyTable;
 class SpecifyDynamicAndStaticQuality
     : public WContainerWidget {
 public:
@@ -19,7 +19,7 @@ public:
   bool getChanges(MsmOutput * output);
 
 private:
-  WTable * table;
+  PropertyTable * table;
   WLineEdit * Name;
   WLineEdit * Format;
   WLineEdit * Enabled;

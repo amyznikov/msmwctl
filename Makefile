@@ -6,7 +6,7 @@
 SHELL=/bin/bash
 
 TARGET=usr/bin/msmwctl
-VERSION=0.0.3
+VERSION=0.0.4
 all : $(TARGET)
 
 cross   =
@@ -45,6 +45,7 @@ LD=$(CXX)
 LDFLAGS = $(CXXFLAGS) 
 
 STRIP=$(cross)strip --strip-all
+# STRIP = echo not stripping  
 
 SYSTEMCTL=$(shell which systemctl)
 SERVICE=$(shell which service)
@@ -59,11 +60,11 @@ LDLIBS  += -lwthttp -lwt -lmsmctl -ljansson  \
 
 
 PRECOMPILED_HEADER = src/msmwctl.h.gch
-$(PRECOMPILED_HEADER) : src/msmwctl.h src/msm.h Makefile
+$(PRECOMPILED_HEADER) : src/msmwctl.h src/msm.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) src/msmwctl.h -o $@
 
 
-$(MODULES): $(HEADERS) $(PRECOMPILED_HEADER) Makefile
+$(MODULES): $(HEADERS) $(PRECOMPILED_HEADER)
 $(TARGET) : $(MODULES) Makefile
 	$(LD) $(LDFLAGS) -o $@ $(MODULES) $(LDLIBS) && $(STRIP) $@ 
 

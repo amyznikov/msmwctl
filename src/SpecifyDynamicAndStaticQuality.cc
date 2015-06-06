@@ -6,6 +6,7 @@
  */
 
 #include "msmwctl.h"
+#include "PropertyTable.h"
 #include "SpecifyDynamicAndStaticQuality.h"
 
 
@@ -13,23 +14,23 @@ SpecifyDynamicAndStaticQuality::SpecifyDynamicAndStaticQuality(WContainerWidget 
     : Base(parent)
 {
   WVBoxLayout * vbox = new WVBoxLayout(this);
-  vbox->addWidget(table = new WTable());
-  vbox->addSpacing(WLength(4, WLength::FontEx));
+  vbox->setContentsMargins(0, 0, 0, 0);
 
-//  table->setWidth(WLength(95, WLength::Percentage));
-  table->addStyleClass("prop_table");
-  addwidget(table, "Name", &Name);
-  addwidget(table, "Format", &Format);
-  addwidget(table, "Enabled", &Enabled);
-  addwidget(table, "VideoWidth",&VideoWidth);
-  addwidget(table, "VideoHeight", &VideoHeight);
-  addwidget(table, "StaticQuality", &StaticQuality);
-  addwidget(table, "DynamicQuality", &DynamicQuality);
-  addwidget(table, "MotionThreshold", &MotionThreshold);
-  addwidget(table, "BgWeight", &BgWeight);
-  addwidget(table, "AudioCodec", &AudioCodec);
-  addwidget(table, "AudioCodecOpts", &AudioCodecOpts);
-  addwidget(table, "SampleRate", &SampleRate);
+  vbox->addWidget(table = new PropertyTable());
+  table->add("Name", &Name);
+  table->add("Format", &Format);
+  table->add("Enabled", &Enabled);
+  table->add("VideoWidth",&VideoWidth);
+  table->add("VideoHeight", &VideoHeight);
+  table->add("StaticQuality", &StaticQuality);
+  table->add("DynamicQuality", &DynamicQuality);
+  table->add("MotionThreshold", &MotionThreshold);
+  table->add("BgWeight", &BgWeight);
+  table->add("AudioCodec", &AudioCodec);
+  table->add("AudioCodecOpts", &AudioCodecOpts);
+  table->add("SampleRate", &SampleRate);
+
+  // vbox->addSpacing(WLength(4, WLength::FontEx));
 }
 
 

@@ -6,6 +6,7 @@
  */
 
 #include "msmwctl.h"
+#include "PropertyTable.h"
 #include "SpecifyExpertOutputProps.h"
 
 
@@ -15,28 +16,29 @@ SpecifyExpertOutputProps::SpecifyExpertOutputProps(WContainerWidget * parent)
 {
   WVBoxLayout * vbox = new WVBoxLayout(this);
   vbox->setContentsMargins(0, 0, 0, 0);
-  vbox->addWidget(table = new WTable(), 1, Wt::AlignTop);
 
-  table->addStyleClass("prop_table");
-  addwidget(table, "Name", &Name);
-  addwidget(table, "Format", &Format);
-  addwidget(table, "CtxOpts", &CtxOpts);
-  addwidget(table, "GopSize", &GopSize);
-  addwidget(table, "Pps", &Pps);
-  addwidget(table, "Eps", &Eps);
-  addwidget(table, "Enabled", &Enabled);
-  addwidget(table, "Maxqv", &Maxqv);
-  addwidget(table, "SBuf", &SBuf);
-  addwidget(table, "PBuf", &PBuf);
-  addwidget(table, "STmo", &STmo);
-  addwidget(table, "StartOnKey",&StartOnKey);
-  addwidget(table, "VideoCodec", &VideoCodec);
-  addwidget(table, "VideoCodecOpts", &VideoCodecOpts);
-  addwidget(table, "VideoWidth",&VideoWidth);
-  addwidget(table, "VideoHeight", &VideoHeight);
-  addwidget(table, "AudioCodec", &AudioCodec);
-  addwidget(table, "AudioCodecOpts", &AudioCodecOpts);
-  addwidget(table, "SampleRate", &SampleRate);
+  vbox->addWidget(table = new PropertyTable()/*, 1, Wt::AlignTop*/);
+  table->add("Name", &Name);
+  table->add("Format", &Format);
+  table->add("CtxOpts", &CtxOpts);
+  table->add("GopSize", &GopSize);
+  table->add("Pps", &Pps);
+  table->add("Eps", &Eps);
+  table->add("Enabled", &Enabled);
+  table->add("Maxqv", &Maxqv);
+  table->add("SBuf", &SBuf);
+  table->add("PBuf", &PBuf);
+  table->add("STmo", &STmo);
+  table->add("StartOnKey",&StartOnKey);
+  table->add("VideoCodec", &VideoCodec);
+  table->add("VideoCodecOpts", &VideoCodecOpts);
+  table->add("VideoWidth",&VideoWidth);
+  table->add("VideoHeight", &VideoHeight);
+  table->add("AudioCodec", &AudioCodec);
+  table->add("AudioCodecOpts", &AudioCodecOpts);
+  table->add("SampleRate", &SampleRate);
+
+  // vbox->addSpacing(WLength(4, WLength::FontEx));
 }
 
 

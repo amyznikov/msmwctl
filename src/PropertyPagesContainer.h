@@ -31,10 +31,13 @@ protected:
 private:
   WTemplate * pageTemplate_;
   WText * legend_;
-  WComboBox * selector_;
+  WPushButton * selector_;
+  WPopupMenu * menu_;
   WStackedWidget * stack_;
   WPushButton * save_;
-  void selectorChanged(int curSel);
+  //void selectorChanged(int curSel);
+  void selectorChanged(WMenuItem * item);
+
 };
 
 #endif /* __PropertyPagesContainer_h__ */

@@ -26,17 +26,23 @@ static const char template_text[] =
 DeteleConfirmationPage::DeteleConfirmationPage(WContainerWidget * parent)
   : Base(parent)
 {
+  addStyleClass("confirm-delete");
   pageTemplate = new WTemplate(template_text, this);
   bindWidget(pageTemplate,"message", &message_);
-  bindWidget(pageTemplate,"force", &force_, 0);
   bindWidget(pageTemplate,"confirm", &confirm_, 0);
   bindWidget(pageTemplate,"cancel", &cancel_, 0);
 
-  confirm_->setText("YES");
-  cancel_->setText("NO");
-  force_->setText("Force");
+  //bindWidget(pageTemplate,"force", &force_, 0);
+  // Workaround Wt bug....
+  force_ = new WCheckBox("Force");
+  pageTemplate->bindWidget("force", force_);
 
+  confirm_->setText("YES");
+  confirm_->addStyleClass("btn-danger");
   confirm_->clicked().connect(this, &DeteleConfirmationPage::onConfirmClicked);
+
+  cancel_->setText("NO");
+  cancel_->addStyleClass("btn-primary");
   cancel_->clicked().connect(this, &DeteleConfirmationPage::onCancelClicked);
 }
 

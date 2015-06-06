@@ -6,6 +6,7 @@
  */
 
 #include "msmwctl.h"
+#include "PropertyTable.h"
 #include "SpecifySinkProps.h"
 
 
@@ -14,12 +15,14 @@ SpecifySinkProps :: SpecifySinkProps(WContainerWidget * parent)
 {
   WVBoxLayout * vbox = new WVBoxLayout(this);
   vbox->setContentsMargins(0,0,0,0);
-  vbox->addWidget(table = new WTable(), 1, Wt::AlignTop);
 
-  table->addStyleClass("prop_table");
-  addwidget(table, "Name", &Name);
-  addwidget(table, "Url", &Url);
-  addwidget(table, "Format", &Format);
+  vbox->addWidget(table = new PropertyTable());
+  table->add("Name", &Name);
+  table->add("Url", &Url);
+  table->add("Format", &Format);
+
+  // vbox->addSpacing(WLength(4, WLength::FontEx));
+
 }
 
 void SpecifySinkProps :: setSinkProps(const MsmSink * sink)
