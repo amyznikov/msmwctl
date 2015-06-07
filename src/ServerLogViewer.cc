@@ -35,19 +35,23 @@ void ServerLogViewer::on_msm_event(const struct msm_event * event)
 {
   if ( event->name && strcmp(event->name,"event-timer") != 0 ) {
     WServer::instance()->post(sessionId,
-        boost::bind(&ServerLogViewer::updateLog, this, WString(event->name), WString(event->params)));
+        boost::bind(&ServerLogViewer::updateLog, this, WString(event->name), WString(event->severity),
+            WString(event->params)));
   }
 }
 
 
-void ServerLogViewer::updateLog(const WString & eventName, const WString & details)
+void ServerLogViewer::updateLog(const WString & eventName, const WString & severity, const WString & details)
 {
   const int r = table->rowCount();
 
   table->insertRow(1);
+  table->rowAt(1)->addStyleClass(severity);
   table->elementAt(1, 0)->addWidget(new WText(eventName));
-
   table->elementAt(1, 1)->addWidget(new WText(details));
+
+//  table->elementAt(1, 0)->addWidget(new WText(eventName));
+//  table->elementAt(1, 1)->addWidget(new WText(details));
 
   WApplication::instance()->triggerUpdate();
 }

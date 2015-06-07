@@ -121,3 +121,11 @@ legend {
 	padding: 0px;
 	padding-left: 16px;
 }
+
+.eventlog .error {
+	color: red;
+}
+
+.eventlog .warning {
+	color: orange;
+}
