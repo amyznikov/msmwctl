@@ -6,7 +6,10 @@
  */
 
 #include "msmwctl.h"
-#include "GuiRoot.h"
+#include "ServerLogViewer.h"
+#include "LeftPane.h"
+#include "RightPane.h"
+
 #include <signal.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -67,6 +70,17 @@ class MSMApplication
   typedef WApplication
       Base;
 
+  WVBoxLayout * vbox1;
+  WHBoxLayout * hbox1;
+  WVBoxLayout * vbox2;
+
+  WNavigationBar * nav;
+  LeftPane * leftPane;
+  RightPane * rightPane;
+  ServerLogViewer * logView;
+  WCheckBox * showLog;
+
+
 public:
 
   MSMApplication(const WEnvironment& env)
@@ -80,7 +94,73 @@ public:
 
     enableUpdates(true);
 
-    new GuiRoot(root());
+    createGUI();
+  }
+
+  /* Create GUI */
+  void createGUI()
+  {
+    WContainerWidget * root_ = root();
+
+    vbox1 = new WVBoxLayout(root_);
+    vbox1->setContentsMargins(0, 0, 0, 0);
+
+    vbox1->addWidget(nav = new WNavigationBar(), 0, Wt::AlignTop);
+    nav->setTitle("MSM2 configuration tool");
+    //nav->addWidget(showLog = new WCheckBox("View Log"), Wt::AlignRight);
+    nav->addFormField(showLog = new WCheckBox("Show Server Events"), Wt::AlignRight);
+
+
+    vbox1->addLayout(hbox1 = new WHBoxLayout(), 1);
+    hbox1->setContentsMargins(0, 0, 0, 0);
+
+
+    hbox1->addWidget(leftPane = new LeftPane());
+    hbox1->setResizable(0, true, "25%");
+
+    hbox1->addLayout(vbox2 = new WVBoxLayout());
+    vbox2->addWidget(rightPane = new RightPane());
+
+
+
+    logView = new ServerLogViewer();
+    showLog->setUnChecked();
+    showLog->clicked().connect(this, &MSMApplication::onShowServerLog);
+
+
+    leftPane->addInput().connect(rightPane, &RightPane::AddInput);
+    leftPane->editInput().connect(rightPane, &RightPane::EditInput);
+    leftPane->addOutput().connect(rightPane, &RightPane::AddOutput);
+    leftPane->editOutput().connect(rightPane, &RightPane::EditOutput);
+    leftPane->addSink().connect(rightPane, &RightPane::AddSink);
+    leftPane->editSink().connect(rightPane, &RightPane::EditSink);
+    leftPane->streamsRootSelected().connect(rightPane, &RightPane::showStreams);
+    leftPane->nothingSelected().connect(rightPane, &RightPane::showNothingSelected);
+
+    rightPane->inputAdded().connect(leftPane, &LeftPane::onInputAdded);
+    rightPane->inputDeleted().connect(leftPane, &LeftPane::onInputDeleted);
+    rightPane->inputChanged().connect(leftPane, &LeftPane::onInputChanged);
+
+    rightPane->outputAdded().connect(leftPane, &LeftPane::onOutputAdded);
+    rightPane->outputDeleted().connect(leftPane, &LeftPane::onOutputDeleted);
+    rightPane->outputChanged().connect(leftPane, &LeftPane::onOutputChanged);
+
+    rightPane->sinkAdded().connect(leftPane, &LeftPane::onSinkAdded);
+    rightPane->sinkDeleted().connect(leftPane, &LeftPane::onSinkDeleted);
+    rightPane->sinkChanged().connect(leftPane, &LeftPane::onSinkChanged);
+
+  }
+
+  void onShowServerLog()
+  {
+    if ( showLog->isChecked() ) {
+      vbox2->addWidget(logView);
+      vbox2->setResizable(0, true, "80%");
+    }
+    else {
+      vbox2->removeWidget(logView);
+      vbox2->setResizable(0, false);
+    }
   }
 
   static WApplication * create(const WEnvironment& env) {

@@ -68,11 +68,22 @@ static WTreeNode * guessNextSelection(WTreeNode * parent, const WTreeNode * remo
 LeftPane::LeftPane(WContainerWidget * parent)
     : Base(parent)
 {
-  vbox = new WVBoxLayout(this);
+  WStackedWidget * wrap;
 
-  vbox->addWidget(reloadStreams = new WPushButton("Reload streams..."), 1, Wt::AlignLeft | Wt::AlignTop);
+  addStyleClass("leftpane");
+
+  vbox = new WVBoxLayout(this);
+  vbox->setContentsMargins(0, 0, 0, 0);
+
+  vbox->addWidget(reloadStreams = new WPushButton("Reload streams..."), 0, Wt::AlignLeft | Wt::AlignTop);
   vbox->addSpacing(WLength(1, WLength::FontEx));
-  vbox->addWidget(streamsTreeView = new WTree(), 100, Wt::AlignTop);
+//  vbox->addWidget(streamsTreeView = new WTree(), 1, Wt::AlignTop);
+//  streamsTreeView->addStyleClass("stree");
+
+  vbox->addWidget(wrap = new WStackedWidget(), 100, Wt::AlignTop);
+  wrap->addStyleClass("stree");
+  wrap->addWidget(streamsTreeView = new WTree());
+  wrap->setCurrentIndex(0);
 
   reloadStreams->clicked().connect(this, &LeftPane::onReloadClicked);
 
@@ -80,7 +91,7 @@ LeftPane::LeftPane(WContainerWidget * parent)
   streamsTreeView->setSelectionMode(Wt::SingleSelection);
   streamsTreeView->itemSelectionChanged().connect(this, &LeftPane::onTreeViewSelectionChanged);
 
-  setMinimumSize(WLength::Auto, WLength(100,WLength::FontEx));
+  //setMinimumSize(WLength::Auto, WLength(100,WLength::FontEx));
 
   populateTree();
 }

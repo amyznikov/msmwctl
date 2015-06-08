@@ -10,22 +10,22 @@
 #include "InputProps.h"
 #include "OutputProps.h"
 #include "SinkProps.h"
+#include "ServerLogViewer.h"
 
 RightPane::RightPane(WContainerWidget * parent)
     : Base(parent)
 {
-  vbox = new WVBoxLayout(this);
-  vbox->addWidget(stack = new WStackedWidget());
-  vbox->setContentsMargins(0, 0, 0, 0);
+  addStyleClass("rightpane");
 
+  vbox = new WVBoxLayout(this);
+  vbox->setContentsMargins(0, 0, 0, 0);
+  vbox->addWidget(stack = new WStackedWidget());
   stack->addWidget(streamListView = new StreamListView());
   stack->addWidget(inputProps = new InputProps());
   stack->addWidget(outputProps = new OutputProps());
   stack->addWidget(sinkProps = new SinkProps());
   stack->setCurrentIndex(-1);
 }
-
-
 
 void RightPane::AddInput()
 {
