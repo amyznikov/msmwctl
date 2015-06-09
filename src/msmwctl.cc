@@ -70,6 +70,13 @@ class MSMApplication
   typedef WApplication
       Base;
 
+  enum {
+    LangDefault = 0,
+    LangEn = 1,
+    LangRu = 2,
+  } language;
+
+
   WVBoxLayout * vbox1;
   WHBoxLayout * hbox1;
   WVBoxLayout * vbox2;
@@ -78,13 +85,21 @@ class MSMApplication
   LeftPane * leftPane;
   RightPane * rightPane;
   ServerLogViewer * logView;
-  WCheckBox * showLog;
 
+  WPushButton * optionsButton;
+  WPopupMenu * options;
+  WMenuItem * optionShowLog;
+  WPopupMenu * langPopup;
+  WMenuItem * langEn;
+  WMenuItem * langRu;
+
+//  WMessageResourceBundle * bundleRu;
+//  WMessageResourceBundle * bundleEn;
 
 public:
 
   MSMApplication(const WEnvironment& env)
-      : Base(env)
+      : Base(env), language(LangDefault), logView(0)
   {
     setTitle("MSM2 Control Gui");
     setMediaServerAddress(env);
@@ -93,6 +108,14 @@ public:
     useStyleSheet("style/site.css");
 
     enableUpdates(true);
+
+//    (bundleRu = new WMessageResourceBundle())->use(appRoot() + "messages.ru");
+//    (bundleEn = new WMessageResourceBundle())->use(appRoot() + "messages.en");
+//
+//    const std::string current_locate = locale();
+//    fprintf(stderr, "current_locate = '%s'\n",current_locate.c_str());
+//
+//    setLocalizedStrings(bundleRu);
 
     createGUI();
   }
@@ -106,9 +129,31 @@ public:
     vbox1->setContentsMargins(0, 0, 0, 0);
 
     vbox1->addWidget(nav = new WNavigationBar(), 0, Wt::AlignTop);
+    nav->setResponsive(true);
+    nav->addStyleClass("navbar-static-top");
     nav->setTitle("MSM2 configuration tool");
-    //nav->addWidget(showLog = new WCheckBox("View Log"), Wt::AlignRight);
-    nav->addFormField(showLog = new WCheckBox("Show Server Events"), Wt::AlignRight);
+
+
+    nav->addWidget(optionsButton = new WPushButton("Settings"), Wt::AlignRight);
+    optionsButton->setMargin("8px", Wt::Right);
+    optionsButton->setMenu(options = new WPopupMenu());
+
+
+    optionShowLog = options->addItem("Show Server Events");
+    optionShowLog->setCheckable(true);
+    optionShowLog->triggered().connect(this, &MSMApplication::onShowEventLog);
+
+    options->addSeparator();
+
+    options->addMenu("Lagnuage", langPopup= new WPopupMenu());
+    langEn = langPopup->addItem("English");
+    langEn->setCheckable(true);
+    langEn->triggered().connect(this, &MSMApplication::selectLangEn);
+
+    langRu = langPopup->addItem(WString::fromUTF8("Русский"));
+    langRu->setCheckable(true);
+    langRu->triggered().connect(this, &MSMApplication::selectLangRu);
+
 
 
     vbox1->addLayout(hbox1 = new WHBoxLayout(), 1);
@@ -121,11 +166,6 @@ public:
     hbox1->addLayout(vbox2 = new WVBoxLayout());
     vbox2->addWidget(rightPane = new RightPane());
 
-
-
-    logView = new ServerLogViewer();
-    showLog->setUnChecked();
-    showLog->clicked().connect(this, &MSMApplication::onShowServerLog);
 
 
     leftPane->addInput().connect(rightPane, &RightPane::AddInput);
@@ -151,15 +191,42 @@ public:
 
   }
 
-  void onShowServerLog()
+  void selectLangEn()
   {
-    if ( showLog->isChecked() ) {
+    langRu->setChecked(false);
+////    WLocalizedStrings * s = localizedStrings();
+////    if ( s ) {
+////      localizedStrings()->hibernate();
+////    }
+//    setLocalizedStrings(bundleEn);
+//    refresh();
+  }
+
+  void selectLangRu()
+  {
+    langEn->setChecked(false);
+////    WLocalizedStrings * s = localizedStrings();
+////    if ( s ) {
+////      localizedStrings()->hibernate();
+////    }
+//    setLocalizedStrings(bundleRu);
+//    refresh();
+  }
+
+  void onShowEventLog()
+  {
+    if ( optionShowLog->isChecked() ) {
+      if ( !logView ) {
+        logView = new ServerLogViewer();
+      }
       vbox2->addWidget(logView);
       vbox2->setResizable(0, true, "80%");
     }
     else {
-      vbox2->removeWidget(logView);
-      vbox2->setResizable(0, false);
+      if ( logView != 0 ) {
+        vbox2->removeWidget(logView);
+        vbox2->setResizable(0, false);
+      }
     }
   }
 
