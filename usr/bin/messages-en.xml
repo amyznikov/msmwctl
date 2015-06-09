@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <messages>
+
+       <!---  general  -->
+   <message id='manageStreams'>
+     Manage streams
+   </message>
+   
+   <message id='serverEvents'>
+     Server events
+   </message>
+   
+   <message id='MSM2ConfigurationUtility'>
+     MSM2 Configuration Utility
+   </message>
+      
+   <message id='saveChangesButton'>
+     Save...
+   </message>
+   
+      
+   <message id='YES'>
+     Yes
+   </message>
+   
+   <message id='NO'>
+     No
+   </message>
+      
+   <message id='Force'>
+     Force
+   </message>
+   
+   <!---  events  -->
+   
+   <message id='event'>
+     Event
+   </message>
+   
+   <message id='details'>
+     Details
+   </message>
+   
+      <!---  inputProps  -->
+   
+     <message id='editProperties'>
+     Edit properties
+   </message>
+   
+   <message id='probeInput'>
+     Probe Input
+   </message>
+   
+   <message id='deleteInput'>
+     Delete this input
+   </message>
+
+  <message id='specifyInputProps'>
+     Specify Input name and properties
+   </message>
+   
+  <message id='inputName'>
+     Name
+   </message>
+  
+  <message id='inputIsNotAddedError'>
+     The Input is not created yet
+   </message>
+   
+   <message id='areYouSureToDeleteInput'>
+      will be deleted. Are you sure you want to delete this Input and all its Outputs and Sinks?
+   </message>
+   
+   <message id='noInputNameSpecified'>
+     Name of the input is not specified
+   </message>
+   
+   <message id='inputNameIsMandatory'>
+     Input name is required
+   </message>
+   
+   <message id='removed'>
+     Removed
+   </message>
+
+   <message id='inputRemoved'>
+      was removed successfully
+   </message>
+   
+   <message id='source'>
+     URL
+   </message>
+   
+   <message id='inputFormat'>
+     Input format
+   </message>
+
+  <message id='enabled'>
+     Enabled (yes/no)
+   </message>
+   
+  <message id='ctxOpts'>
+     ААААААААААААААААААААААААА
+   </message>
+  
+  <message id='decOpts'>
+     ААААААААААААААААААААААААА
+   </message>
+   
+   <message id='live'>
+     Live (yes/no)
+   </message>
+   
+   <message id='ignoreErrors'>
+     Ignore errors (yes/no)
+   </message>
+   
+   <message id='fastProbe'>
+     Fast probe (yes/no)
+   </message>
+   
+   <message id='genPts'>
+     Generate mks PTS
+   </message>
+
+   <message id='RE'>
+      Rate emulation
+   </message>  
+   
+   <message id='syntaxError'>
+      Syntax error:
+   </message>
+
+   <message id='invalidValueLive'>
+      Invalid value: Live = 
+   </message>
+   
+   <message id='invalidValueEnabled'>
+      Invalid value: Enabled = 
+   </message>
+   
+   <message id='invalidValueIgnoreErrors'>
+      Invalid value: Ignore errors = 
+   </message>
+   
+   <message id='invalidValueFastProbe'>
+      Invalid value: Fast probe = 
+   </message>
+   
+   <message id='invalidValueRE'>
+      Invalid value: Rate emulation = 
+   </message>
+   
+         <!---  leftPanel  -->
+   
+   <message id='reloadStreams'>
+     Reload streams
+   </message>
+   
+   <message id='streams'>
+     Streams
+   </message>
+   
+   <message id='addInput'>
+     Add Input 
+   </message>
+   
+   <message id='addOutput'>
+     Add Output... 
+   </message>
+
+   <message id='addSink'>
+     Add Sink... 
+   </message>
+   
+           <!---  outputProps  -->
+   
+    
+   <message id='specifyStaticAndDynamicQuality'>
+     Static and Dynamic quality
+   </message>
+   
+   <message id='specifyQualityAndMaxRate'>
+     General quality and Max rate
+   </message>
+   
+   <message id='expertMode'>
+     Expert mode
+   </message>
+   
+   <message id='preview'>
+     Preview
+   </message>
+   
+   <message id='deleteOutput'>
+     Delete this output
+   </message>
+
+  <message id='specifyOutputProps'>
+     Specify Output name and properties
+   </message>
+   
+  <message id='outputName'>
+     Name
+   </message>
+  
+  <message id='outputIsNotAddedError'>
+     The output is not created yet
+   </message>
+   
+   <message id='areYouSureDeleteOutput'>
+      will be deleted. Are you sure you want to delete this Output and all its Sinks?
+   </message>
+     
+   <message id='caution'>
+     Caution!
+   </message>
+      
+   <message id='noVideoURLSpecified'>
+     The video URL is not specified!
+   </message>
+   
+   
+   
+   
+   <message id='noOutputNameSpecified'>
+     Output name is not entered
+   </message>
+   
+   <message id='outputNameIsMandatory'>
+     Output name is required
+   </message>
+   
+   <message id='removed'>
+     Removed
+   </message>
+
+   <message id='outputRemoved'>
+      was removed successfully
+   </message>
+   
+   
+   <message id='outputFormat'>
+     Output format
+   </message>
+
+  <message id='enabled'>
+     Enabled (yes/no)
+   </message>
+   
+  <message id='videoWidth'>
+     Video width (pc)
+   </message>
+   
+  <message id='videoHeight'>
+     Video heigth (pc)
+   </message>
+      
+  <message id='staticQuality'>
+     Static details quality (%)
+   </message>
+   
+  <message id='dynamicQuality'>
+     Dynamic details quality (%)
+   </message>
+         
+  <message id='motionThreshold'>
+     ААААААААААААААААААААААААА
+   </message>
+   
+  <message id='bgWeight'>
+     ААААААААААААААААААААААААА
+   </message>
+   
+  <message id='audioCodecOpts'>
+     ААААААААААААААААААААААААА
+   </message>
+   
+  <message id='ctxOpts'>
+     ААААААААААААААААААААААААА
+   </message>
+  
+   <message id='audioCodec'>
+     Output audio codec
+   </message>
+      
+   <message id='sampleRate'>
+     Sample rate (Hz)
+   </message>
+   
+   <message id='live'>
+     Live (yes/no)
+   </message>
+   
+   <message id='ignoreErrors'>
+     Ignore errors (yes/no)
+   </message>
+   
+   <message id='fastProbe'>
+     Fast ptobe (yes/no)
+   </message>
+   
+   <message id='genPts'>
+     Generate mks PTS
+   </message>
+
+   <message id='RE'>
+      Rate emulation
+   </message>  
+     
+   
+   
+   
+   <message id='gopSize'>
+     Distance between key frames
+   </message>
+      
+   <message id='pps'>
+     АААААААААААААААААА
+   </message>
+   
+   <message id='eps'>
+     Max number of encoded frames per second
+   </message>
+   
+   <message id='maxqv'>
+     Max queue length
+   </message>
+   
+   <message id='sBuf'>
+     АААААААААААААААААААА
+   </message>
+   
+   <message id='pBuf'>
+     АААААААААААААААААААА
+   </message>
+
+   <message id='sTmo'>
+      ААААААААААААААААААААААА
+   </message>  
+      
+   <message id='startOnKey'>
+     ААААААААААААААААААААААА
+   </message>
+   
+   <message id='videoCodec'>
+     Output video codec
+   </message>
+   
+   <message id='videoCodecOpts'>
+     ААААААААААААААААААААААА
+   </message>
+
+  
+      
+   <message id='videoQuality'>
+     General quality (%)
+   </message>
+   
+   <message id='maxRate'>
+     Max bitrate (Kbit/s)
+   </message>
+   
+   
+   <message id='syntaxError'>
+      Syntax error 
+   </message>
+
+   <message id='invalidValueStaticQuality'>
+      Invalid value:  = 
+   </message>
+   
+   <message id='invalidValueEnabled'>
+      Invalid value: Enabled = 
+   </message>
+   
+   <message id='invalidValueDynamicQuality'>
+      Invalid value: Dynamic details quality = 
+   </message>
+   
+   <message id='invalidValueMotionThreshold'>
+      Invalid value: АААААААААААААААА = 
+   </message>
+   
+   <message id='invalidValueBgWeight'>
+      Invalid value: АААААААААААААААААААА = 
+   </message>
+   
+   <message id='invalidValueVideoWidth'>
+      Invalid value: Video width = 
+   </message>
+   
+   <message id='invalidValueVideoHeight'>
+     Invalid value: Video heigth = 
+   </message>
+   
+   <message id='invalidValueSampleRate'>
+      Invalid value: Output sampre rate = 
+   </message>
+         
+   <message id='invalidValueGopSize'>
+      Invalid value: Distance between key frames = 
+   </message>
+   
+   <message id='invalidValuePps'>
+     Invalid value: AAAAAAAAAAAAAA = 
+   </message>
+   
+   <message id='invalidValueEps'>
+      Invalid value: Max number of encoded frames per second = 
+   </message>
+   
+   <message id='invalidValueMaxqv'>
+     Invalid value: Max queue value = 
+   </message>
+   
+   <message id='invalidValueSBuf'>
+      Invalid value: АААААААААААААААААААА = 
+   </message>
+   
+   <message id='invalidValuePBuf'>
+      Invalid value: АААААААААААААААААААА = 
+   </message>
+   
+   <message id='invalidValueSTmo'>
+      Invalid value: АААААААААААААААААААА = 
+   </message> 
+      
+   <message id='invalidValueStartOnKey'>
+      Invalid value: АААААААААААААААААААА = 
+   </message>
+   
+      
+   <message id='invalidValueVideoQuality'>
+      Invalid value: General quality = 
+   </message> 
+      
+   <message id='invalidValueMaxRate'>
+      Invalid value: Max bitrate = 
+   </message>
+   
+          <!---  sinkProps  -->
+   
+     
+   <message id='editProperties'>
+     Edit properties
+   </message>
+   
+   <message id='deleteSink'>
+     Delete this Sink
+   </message>
+
+  <message id='specifySinkProps'>
+     Specify Sink name and properties
+   </message>
+   
+  <message id='sinkName'>
+     Name
+   </message>
+  
+  <message id='sinkIsNotAddedError'>
+     The Sink is not created yet
+   </message>
+   
+   <message id='areYouSureDeleteSink'>
+       will be deleted. Are you sure you want to delete this Sink?
+   </message>
+   
+   <message id='noSinkNameSpecified'>
+     Sink name is not specified
+   </message>
+   
+   <message id='sinkNameIsMandatory'>
+     Sink name is requred
+   </message>
+   
+   <message id='removed'>
+     Removed
+   </message>
+
+   <message id='sinkDeleted'>
+       was deleted successfully
+   </message>
+   
+   <message id='sinkUrl'>
+     Sink URL
+   </message>
+   
+   <message id='sinkFormat'>
+     Output format
+   </message>
+   
+   <!---  streamListView  -->
+   
+   
+   <message id='state'>
+     State
+   </message>
+   
+   <message id='startTime'>
+     Start time
+   </message>
+   
+   <message id='status'>
+     Status
+   </message>
+      
+   <message id='sessionName'>
+     Session name
+   </message>
+       
+   <message id='address'>
+     Address
+   </message>
+   
+   <message id='agent'>
+     Agent
+   </message>
+      
+   <message id='showInputs'>
+     Show inputs
+   </message>
+         
+   <message id='showOutputs'>
+     Show outputs
+   </message>
+       
+   <message id='showSinks'>
+     Show sinks
+   </message>
+   
+   <message id='showSessions'>
+     Show Sessions
+   </message>
+      
+   <message id='refresh'>
+     Refresh
+   </message>
+   
+ </messages>

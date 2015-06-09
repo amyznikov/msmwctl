@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <messages>
+
+       <!---  general  -->
+   <message id='manageStreams'>
+     Настройка видеопотоков
+   </message>
+   
+   <message id='serverEvents'>
+     События на сервере
+   </message>
+   
+   <message id='MSM2ConfigurationUtility'>
+     Конфигурирование МСМ2
+   </message>
+      
+   <message id='saveChangesButton'>
+     Сохранить
+   </message>
+   
+      
+   <message id='YES'>
+     Да
+   </message>
+   
+   <message id='NO'>
+     Нет
+   </message>
+      
+   <message id='Force'>
+     Принудительно
+   </message>
+   
+   <!---  events  -->
+   
+   <message id='event'>
+     Событие
+   </message>
+   
+   <message id='details'>
+     Подробнее
+   </message>
+   
+      <!---  inputProps  -->
+   
+     <message id='editProperties'>
+     Редактировать
+   </message>
+   
+   <message id='probeInput'>
+     Пример видео
+   </message>
+   
+   <message id='deleteInput'>
+     Удалить этот вход
+   </message>
+
+  <message id='specifyInputProps'>
+     Введите название и свойства Входа
+   </message>
+   
+  <message id='inputName'>
+     Название Входа
+   </message>
+  
+  <message id='inputIsNotAddedError'>
+     Этот Вход пока не создан
+   </message>
+   
+   <message id='areYouSureToDeleteInput'>
+      будет удален. Вы уверены, что хотите удалить этот Вход и все его Выходы и Раковины?
+   </message>
+   
+   <message id='noInputNameSpecified'>
+     Не задано название Входа
+   </message>
+   
+   <message id='inputNameIsMandatory'>
+     Название входа должно быть задано
+   </message>
+   
+   <message id='removed'>
+     Удалено успешно
+   </message>
+
+   <message id='inputRemoved'>
+      успешно удален
+   </message>
+   
+   <message id='source'>
+     Адрес источника
+   </message>
+   
+   <message id='inputFormat'>
+     Формат источника
+   </message>
+
+  <message id='enabled'>
+     Включить
+   </message>
+   
+  <message id='ctxOpts'>
+     ААААААААААААААААААААААААА
+   </message>
+  
+  <message id='decOpts'>
+     ААААААААААААААААААААААААА
+   </message>
+   
+   <message id='live'>
+     "Живой" источник
+   </message>
+   
+   <message id='ignoreErrors'>
+     Игнорировать ошибки
+   </message>
+   
+   <message id='fastProbe'>
+     Быстрая пробация
+   </message>
+   
+   <message id='genPts'>
+     Гененрировать мкс PTS
+   </message>
+
+   <message id='RE'>
+      Эмулируемая частота кадра
+   </message>  
+   
+   <message id='syntaxError'>
+      Ошибка ввода: 
+   </message>
+
+   <message id='invalidValueLive'>
+      Недопустимое значение: "Живой" источник = 
+   </message>
+   
+   <message id='invalidValueEnabled'>
+      Недопустимое значение: Включить = 
+   </message>
+   
+   <message id='invalidValueIgnoreErrors'>
+      Недопустимое значение: Игнорировать ошибки = 
+   </message>
+   
+   <message id='invalidValueFastProbe'>
+      Недопустимое значение: Быстрая пробация = 
+   </message>
+   
+   <message id='invalidValueRE'>
+      Недопустимое значение: Эмулируемая частота кадра = 
+   </message>
+   
+         <!---  leftPanel  -->
+   
+      <message id='reloadStreams'>
+     Загрузить
+   </message>
+   
+   <message id='streams'>
+     Видеопотоки
+   </message>
+   
+   <message id='addInput'>
+     добавить Вход... 
+   </message>
+   
+   <message id='addOutput'>
+     добавить Выход... 
+   </message>
+
+   <message id='addSink'>
+     добавить Раковину... 
+   </message>
+   
+           <!---  outputProps  -->
+   
+    
+   <message id='specifyStaticAndDynamicQuality'>
+     Качество статики и динимики
+   </message>
+   
+   <message id='specifyQualityAndMaxRate'>
+     Общее качество с ограничениями
+   </message>
+   
+   <message id='expertMode'>
+     Режим эксперта
+   </message>
+   
+   <message id='preview'>
+     Пример видео
+   </message>
+   
+   <message id='deleteOutput'>
+     Удалить этот Выход
+   </message>
+
+  <message id='specifyOutputProps'>
+     Введите название и свойства Выхода
+   </message>
+   
+  <message id='outputName'>
+     Название Выхода
+   </message>
+  
+  <message id='outputIsNotAddedError'>
+     Этот Выход пока не создан
+   </message>
+   
+   <message id='areYouSureDeleteOutput'>
+      будет удален. Вы уверены, что хотите удалить этот Выход и все его Раковины?
+   </message>
+     
+   <message id='caution'>
+     Будьте внимательны!
+   </message>
+      
+   <message id='noVideoURLSpecified'>
+     Ссылка на источник видео не задана!
+   </message>
+   
+   
+   
+   
+   <message id='noOutputNameSpecified'>
+     Не задано название Выхода
+   </message>
+   
+   <message id='outputNameIsMandatory'>
+     Название Выхода должно быть задано
+   </message>
+   
+   <message id='removed'>
+     Удалено успешно
+   </message>
+
+   <message id='outputRemoved'>
+      успешно удален
+   </message>
+   
+   
+   <message id='outputFormat'>
+     Выходной формат
+   </message>
+
+  <message id='enabled'>
+     Включить
+   </message>
+   
+  <message id='videoWidth'>
+     Ширина кадра
+   </message>
+   
+  <message id='videoHeight'>
+     Высота кадра
+   </message>
+      
+  <message id='staticQuality'>
+     Качество статики
+   </message>
+   
+  <message id='dynamicQuality'>
+     Качество динамики
+   </message>
+         
+  <message id='motionThreshold'>
+     ААААААААААААААААААААААААА
+   </message>
+   
+  <message id='bgWeight'>
+     ААААААААААААААААААААААААА
+   </message>
+   
+  <message id='audioCodecOpts'>
+     ААААААААААААААААААААААААА
+   </message>
+   
+  <message id='ctxOpts'>
+     ААААААААААААААААААААААААА
+   </message>
+  
+   <message id='audioCodec'>
+     Выходной аудио кодек
+   </message>
+      
+   <message id='sampleRate'>
+     Выходная частота звука(Гц)
+   </message>
+   
+   <message id='live'>
+     "Живой" источник
+   </message>
+   
+   <message id='ignoreErrors'>
+     Игнорировать ошибки
+   </message>
+   
+   <message id='fastProbe'>
+     Быстрая пробация
+   </message>
+   
+   <message id='genPts'>
+     Гененрировать мкс PTS
+   </message>
+
+   <message id='RE'>
+      Эмулируемая частота кадра
+   </message>  
+     
+   
+   
+   
+   <message id='gopSize'>
+     Расстояние между ключевыми кадрами
+   </message>
+      
+   <message id='pps'>
+     АААААААААААААААААА
+   </message>
+   
+   <message id='eps'>
+     Макс. кол-во кодируемых кадров в секунду
+   </message>
+   
+   <message id='maxqv'>
+     Максимальная длина очереди
+   </message>
+   
+   <message id='sBuf'>
+     АААААААААААААААААААА
+   </message>
+   
+   <message id='pBuf'>
+     АААААААААААААААААААА
+   </message>
+
+   <message id='sTmo'>
+      ААААААААААААААААААААААА
+   </message>  
+      
+   <message id='startOnKey'>
+     ААААААААААААААААААААААА
+   </message>
+   
+   <message id='videoCodec'>
+     Выходной видео кодек
+   </message>
+   
+   <message id='videoCodecOpts'>
+     ААААААААААААААААААААААА
+   </message>
+
+  
+      
+   <message id='videoQuality'>
+     Общее качество сцены (%)
+   </message>
+   
+   <message id='maxRate'>
+     Максимальный битрейт (Кбит/сек)
+   </message>
+   
+   
+   <message id='syntaxError'>
+      Ошибка ввода: 
+   </message>
+
+   <message id='invalidValueStaticQuality'>
+      Недопустимое значение: Качество статики = 
+   </message>
+   
+   <message id='invalidValueEnabled'>
+      Недопустимое значение: Включить = 
+   </message>
+   
+   <message id='invalidValueDynamicQuality'>
+      Недопустимое значение: Качество динамики = 
+   </message>
+   
+   <message id='invalidValueMotionThreshold'>
+      Недопустимое значение: АААААААААААААААА = 
+   </message>
+   
+   <message id='invalidValueBgWeight'>
+      Недопустимое значение: АААААААААААААААААААА = 
+   </message>
+   
+   <message id='invalidValueVideoWidth'>
+      Недопустимое значение: Ширина кадра = 
+   </message>
+   
+   <message id='invalidValueVideoHeight'>
+      Недопустимое значение: Высота кадра = 
+   </message>
+   
+   <message id='invalidValueSampleRate'>
+      Недопустимое значение: Выходная частота завука = 
+   </message>
+   
+   
+     
+   <message id='invalidValueGopSize'>
+      Недопустимое значение: Расстояние между ключевыми кадрами = 
+   </message>
+   
+   <message id='invalidValuePps'>
+      Недопустимое значение: AAAAAAAAAAAAAA = 
+   </message>
+   
+   <message id='invalidValueEps'>
+      Недопустимое значение: Макс. кол-во кодируемых кадров в секунду = 
+   </message>
+   
+   <message id='invalidValueMaxqv'>
+      Недопустимое значение: Максимальная длина очереди = 
+   </message>
+   
+   <message id='invalidValueSBuf'>
+      Недопустимое значение: АААААААААААААААААААА = 
+   </message>
+   
+   <message id='invalidValuePBuf'>
+      Недопустимое значение: АААААААААААААААААААА = 
+   </message>
+   
+   <message id='invalidValueSTmo'>
+      Недопустимое значение: АААААААААААААААААААА = 
+   </message> 
+      
+   <message id='invalidValueStartOnKey'>
+      Недопустимое значение: АААААААААААААААААААА = 
+   </message>
+   
+      
+   <message id='invalidValueVideoQuality'>
+      Недопустимое значение: Общее качество сцены = 
+   </message> 
+      
+   <message id='invalidValueMaxRate'>
+      Недопустимое значение: Максимальный битрейт = 
+   </message>
+   
+          <!---  sinkProps  -->
+   
+     
+   <message id='editProperties'>
+     Редактировать
+   </message>
+   
+   <message id='deleteSink'>
+     Удалить эту Раковину
+   </message>
+
+  <message id='specifySinkProps'>
+     Введите название и свойства Раковины
+   </message>
+   
+  <message id='sinkName'>
+     Название Раковины
+   </message>
+  
+  <message id='sinkIsNotAddedError'>
+     Эта Раковина пока не создана
+   </message>
+   
+   <message id='areYouSureDeleteSink'>
+      будет удалена. Вы уверены, что хотите удалить эту Раковину?
+   </message>
+   
+   <message id='noSinkNameSpecified'>
+     Не задано название Входа
+   </message>
+   
+   <message id='sinkNameIsMandatory'>
+     Название входа должно быть задано
+   </message>
+   
+   <message id='removed'>
+     Удалено успешно
+   </message>
+
+   <message id='sinkDeleted'>
+      успешно удалена
+   </message>
+   
+   <message id='sinkUrl'>
+     Адрес получателя потока
+   </message>
+   
+   <message id='sinkFormat'>
+     Формат выдаваемого потока
+   </message>
+   
+   <!---  streamListView  -->
+   
+   
+   <message id='state'>
+     Состояние
+   </message>
+   
+   <message id='startTime'>
+     Время старта
+   </message>
+   
+   <message id='status'>
+     Статус
+   </message>
+      
+   <message id='sessionName'>
+     Название сессии
+   </message>
+       
+   <message id='address'>
+     Адрес
+   </message>
+   
+   <message id='agent'>
+     Агент
+   </message>
+      
+   <message id='showInputs'>
+     Показать Входы
+   </message>
+         
+   <message id='showOutputs'>
+     Показать Выходы
+   </message>
+       
+   <message id='showSinks'>
+     Показать Раковины
+   </message>
+   
+   <message id='showSessions'>
+     Показать Сессии
+   </message>
+      
+   <message id='refresh'>
+     Обновить
+   </message>
+   
+ </messages>
