@@ -122,7 +122,8 @@ legend {
 }
 
 .eventlog td {
-	border: 1px solid gray;
+	border: 0;
+	border-bottom: 1px solid #CCCCCC;
 	padding: 0px;
 	padding-left: 16px;
 }
@@ -142,4 +143,12 @@ legend {
 
 .stree {
 	overflow: auto;	
+}
+
+.probepage h3 {
+	font: 18px Helv Bold;
+}
+
+.probepage .error {
+	color: red;
 }

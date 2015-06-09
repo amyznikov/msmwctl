@@ -20,7 +20,7 @@ public:
 
 private:
   void on_msm_event(const struct msm_event * event);
-  void updateLog(const WString & eventName, const WString & severity, const WString & details);
+  void updateLog(const WString & eventTs, const WString & eventName, const WString & severity, const WString & details);
 
 
 private:

@@ -6,7 +6,7 @@
 SHELL=/bin/bash
 
 TARGET=usr/bin/msmwctl
-VERSION=0.0.4
+VERSION=0.0.5
 all : $(TARGET)
 
 cross   =

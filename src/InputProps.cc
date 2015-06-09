@@ -105,7 +105,7 @@ void InputProps::updateControls()
     }
   }
   else if ( currentPage == probeInputPage ) {
-    probeInputPage->setInput(input->getName());
+    probeInputPage->setInput(input);
   }
 
 

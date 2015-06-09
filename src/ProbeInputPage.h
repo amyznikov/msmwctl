@@ -14,7 +14,7 @@ public:
   typedef WContainerWidget Base;
   ProbeInputPage(WContainerWidget * parent = 0);
   ~ProbeInputPage();
-  void setInput(const WString & inputName);
+  void setInput(const MsmInput * input);
 
 private:
   void onProbeNowClicked();
@@ -23,6 +23,7 @@ private:
   //WTable * table;
   bool doingProbeNow;
   WPushButton * probeNow;
+  WText * inputInfo;
   WText * probeStatus;
   WString inputName;
 
