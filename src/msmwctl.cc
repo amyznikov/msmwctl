@@ -261,8 +261,10 @@ int main(int argc, char *argv[], char **envp)
     int sig;
     bool daemon_mode = true;
 
-    char * args[argc] = {0};
+    char * args[argc];
     int nbargs = 0;
+
+    memset(args, 0, sizeof(args));
 
     for ( int i = 0; i < argc; ++i ) {
       if ( strcmp(argv[i],"-D") == 0 || strcmp(argv[i],"--no-daemon") == 0) {
