@@ -17,7 +17,8 @@ public:
 
 private:
   //WTemplate * embed;
-  WFlashObject * flash;
+  //WFlashObject * flash;
+  WTemplate * pageTemplate;
 };
 
 

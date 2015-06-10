@@ -290,15 +290,15 @@ int main(int argc, char *argv[])
       server.setServerConfiguration(argc, argv, MSMWCTL_CONFIGURATION);
       server.addEntryPoint(Application, &MSMApplication::create);
 
-      if ( (pid = become_daemon()) < 0 ) {
-        LOG_INFO_S(&server, "fork() fails: " << strerror(errno));
-        return 1;
-      }
-
-      if ( pid != 0 ) {
-        /* exit parent process */
-        return 0;
-      }
+//      if ( (pid = become_daemon()) < 0 ) {
+//        LOG_INFO_S(&server, "fork() fails: " << strerror(errno));
+//        return 1;
+//      }
+//
+//      if ( pid != 0 ) {
+//        /* exit parent process */
+//        return 0;
+//      }
 
       /* Determine user's home direcory */
       if ( (uid = geteuid()) == 0 || !(pw = getpwuid(uid)) ) {
