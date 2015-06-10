@@ -16,8 +16,6 @@ public:
   void setMediaSource(const char * url);
 
 private:
-  //WTemplate * embed;
-  //WFlashObject * flash;
   WTemplate * pageTemplate;
 };
 

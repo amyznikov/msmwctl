@@ -93,29 +93,18 @@ class MSMApplication
   WMenuItem * langEn;
   WMenuItem * langRu;
 
-//  WMessageResourceBundle * bundleRu;
-//  WMessageResourceBundle * bundleEn;
-
 public:
 
   MSMApplication(const WEnvironment& env)
       : Base(env), language(LangDefault), logView(0)
   {
     setTitle("MSM2 Control Gui");
+
     setMediaServerAddress(env);
 
     setTheme(new WCustomBootstrapTheme(this));
     useStyleSheet("style/site.css");
-
     enableUpdates(true);
-
-//    (bundleRu = new WMessageResourceBundle())->use(appRoot() + "messages.ru");
-//    (bundleEn = new WMessageResourceBundle())->use(appRoot() + "messages.en");
-//
-//    const std::string current_locate = locale();
-//    fprintf(stderr, "current_locate = '%s'\n",current_locate.c_str());
-//
-//    setLocalizedStrings(bundleRu);
 
     createGUI();
   }
@@ -194,23 +183,11 @@ public:
   void selectLangEn()
   {
     langRu->setChecked(false);
-////    WLocalizedStrings * s = localizedStrings();
-////    if ( s ) {
-////      localizedStrings()->hibernate();
-////    }
-//    setLocalizedStrings(bundleEn);
-//    refresh();
   }
 
   void selectLangRu()
   {
     langEn->setChecked(false);
-////    WLocalizedStrings * s = localizedStrings();
-////    if ( s ) {
-////      localizedStrings()->hibernate();
-////    }
-//    setLocalizedStrings(bundleRu);
-//    refresh();
   }
 
   void onShowEventLog()
@@ -272,7 +249,7 @@ static pid_t become_daemon()
 }
 
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[], char **envp)
 {
   try {
 
@@ -282,23 +259,38 @@ int main(int argc, char *argv[])
     pid_t pid;
     uid_t uid;
     int sig;
+    bool daemon_mode = true;
+
+    char * args[argc] = {0};
+    int nbargs = 0;
+
+    for ( int i = 0; i < argc; ++i ) {
+      if ( strcmp(argv[i],"-D") == 0 || strcmp(argv[i],"--no-daemon") == 0) {
+        daemon_mode = false;
+      }
+      else {
+        args[nbargs++] = argv[i];
+      }
+    }
 
     WServer server(argv[0], "");
-
 
     try {
       server.setServerConfiguration(argc, argv, MSMWCTL_CONFIGURATION);
       server.addEntryPoint(Application, &MSMApplication::create);
 
-//      if ( (pid = become_daemon()) < 0 ) {
-//        LOG_INFO_S(&server, "fork() fails: " << strerror(errno));
-//        return 1;
-//      }
-//
-//      if ( pid != 0 ) {
-//        /* exit parent process */
-//        return 0;
-//      }
+
+      if ( daemon_mode ) {
+        if ( (pid = become_daemon()) < 0 ) {
+          LOG_INFO_S(&server, "fork() fails: " << strerror(errno));
+          return 1;
+        }
+        if ( pid != 0 ) {
+          /* exit parent process */
+          return 0;
+        }
+      }
+
 
       /* Determine user's home direcory */
       if ( (uid = geteuid()) == 0 || !(pw = getpwuid(uid)) ) {
@@ -335,7 +327,7 @@ int main(int argc, char *argv[])
 
 #ifdef WT_THREADED
         if ( sig == SIGHUP )
-          WServer::restart(argc, argv, 0);
+          WServer::restart(nbargs, args, envp);
 #endif // WT_THREADED
       }
 

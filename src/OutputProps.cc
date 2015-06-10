@@ -119,14 +119,14 @@ void OutputProps::updateControls()
     const char * inputName = NULL, *outputName = NULL;
     char address[256] = "", url[PATH_MAX] = "";
     if ( (inputName = output->getInputName()) && (outputName = output->getName()) && *inputName && *outputName
-	 && sscanf(getMediaServerAddress().c_str(), "%255[^:]", address) == 1 ) {
-      snprintf(url, sizeof(url) - 1, "http://%s:8082/%s/%s?fmt=flv", address, inputName, outputName);
+        && sscanf(getMediaServerAddress().c_str(), "%255[^:]", address) == 1 ) {
+      snprintf(url, sizeof(url) - 1, "http://%s:8082/%s/%s", address, inputName, outputName);
     }
     if ( *url ) {
       mediaPreview->setMediaSource(url);
     }
     else {
-      WMessageBox::show("Caution:", "No video URL specified",Wt::Ok);
+      WMessageBox::show("Caution:", "No video URL specified", Wt::Ok);
     }
   }
 
